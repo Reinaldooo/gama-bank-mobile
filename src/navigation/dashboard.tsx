@@ -6,6 +6,7 @@ import DashboardHome from "../screens/DashboardHome";
 import Transfers from "../screens/Transfers";
 import Deposit from "../screens/Deposit";
 import Plans from "../screens/Plans";
+import DrawerNavigator from "./drawer";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -23,6 +24,9 @@ export default function DashboardTabNavigator() {
         activeTintColor: "white",
         inactiveTintColor: "white",
         showLabel: true,
+        tabStyle: {
+          backgroundColor: "transparent",
+        },
         style: {
           backgroundColor: "#8C52E5",
           borderTopColor: "transparent",
@@ -31,7 +35,7 @@ export default function DashboardTabNavigator() {
         },
       }}
     >
-      <Screen name="DashboardHome" component={DashboardHome} />
+      <Screen name="DashboardHome" component={DrawerNavigator} />
       <Screen name="Transfers" component={Transfers} />
       <Screen name="Deposit" component={Deposit} />
       <Screen name="Plans" component={Plans} />

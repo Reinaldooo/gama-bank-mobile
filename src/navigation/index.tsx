@@ -6,8 +6,17 @@ import Login from "../screens/Login";
 import CreateAccount from "../screens/CreateAccount";
 import ForgotPasswd from "../screens/ForgotPasswd";
 import DashboardTabNavigator from "./dashboard";
+import DrawerNavigator from "./drawer";
 
-const RootStack = createStackNavigator();
+export type RootStackParamList = {
+  Login: undefined;
+  CreateAccount: undefined;
+  ForgotPasswd: undefined;
+  DrawerNavigator: undefined;
+  DashboardTabNavigator: undefined;
+};
+
+const RootStack = createStackNavigator<RootStackParamList>();
 
 export default function Navigation() {
   return (
@@ -20,6 +29,7 @@ export default function Navigation() {
           name="DashboardTabNavigator"
           component={DashboardTabNavigator}
         />
+        <RootStack.Screen name="DrawerNavigator" component={DrawerNavigator} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
