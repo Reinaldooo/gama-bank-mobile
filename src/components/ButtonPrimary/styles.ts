@@ -1,9 +1,29 @@
-import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
+import styled from "styled-components/native";
 
-export const Container = styled(RectButton)`
-  background-color: #8c52e5;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin: 10px;
+interface ButtonProps {
+    _color?: string;
+    _bgColor?: string;
+    _fSize?: string;
+    _padding?: string;
+    _mTop?: string;
+    _mBottom?: string;
+}
+
+export const ContainerButton = styled(RectButton)<ButtonProps>`
+  width: 100%;
+  border-radius: 15px;
+  background-color: ${(props) => (props._bgColor || "#63dc3f")};
+  margin-top: ${(props) => (props._mTop || "20px")};
+  margin-bottom: ${(props) => (props._mBottom || "0")};
+  padding: ${(props) => (props._padding || "10px 20px")};
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const TitleCard = styled.Text<ButtonProps>`
+  color: ${(props) => (props._color || "#FFFFFF")};
+  font-size: ${(props) => (props._fSize || "16px")};
 `;

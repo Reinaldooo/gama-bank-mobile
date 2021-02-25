@@ -6122,6 +6122,11 @@ strip-eof@^1.0.0:
   resolved "https://registry.yarnpkg.com/strip-eof/-/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
   integrity sha1-u0P/VZim6wXYm1n80SnJgzE2Br8=
 
+styled-components-react-native@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/styled-components-react-native/-/styled-components-react-native-1.0.0.tgz#80ca3c93bd740f078ca660300d7cb2b565bd7f11"
+  integrity sha512-ATGIroEUdft2MQdVaH0LJlW9S+tN8PQLKpiPWw2MvLtT6nP31XyIEHRtq4tDf47JjlMAwyggPT+GclHrYEfgcg==
+
 styled-components@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.2.1.tgz#6ed7fad2dc233825f64c719ffbdedd84ad79101a"

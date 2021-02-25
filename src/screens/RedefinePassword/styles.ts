@@ -1,4 +1,6 @@
+import { Dimensions, StyleSheet} from 'react-native';
 import styled from "styled-components/native";
+import {ScrollView} from "react-native-gesture-handler";
 
 interface InterfaceInputLoginRegister {
     _mTop?: string;

@@ -24,7 +24,8 @@
     "react-native-screens": "~2.15.2",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "styled-components-react-native": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

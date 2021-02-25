@@ -1,6 +1,6 @@
 import React from "react";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FontAwesome from "react-native-vector-icons/FontAwesome5"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 //
 import DashboardHome from "../screens/DashboardHome";
 import Transfers from "../screens/Transfers";
