@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { InputLoginRegister, LinksBottom } from './styles';
+import { LinksBottom } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import Feather from 'react-native-vector-icons/Feather';
 import ContainerScroll from '../../components/ContainerScrollView';
