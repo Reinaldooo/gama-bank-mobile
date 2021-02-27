@@ -1,17 +1,18 @@
 import axios, { AxiosInstance } from "axios";
-import { isAuth } from "./auth";
+import { AuthDetails, isAuth } from "./auth";
 
 const api: AxiosInstance = axios.create({
   baseURL: "https://accenture-java-desafio.herokuapp.com",
 });
 
-const authDetails = isAuth();
-// const
+let authDetails: AuthDetails | undefined;
 
-api.defaults.headers.Authorization = authDetails.then(
-  res =>{
-    return res?.token;
-  }
-);
+isAuth().then((res) => {
+  authDetails = res;
+});
+
+if (authDetails?.token) {
+  api.defaults.headers.Authorization = authDetails.token;
+}
 
 export default api;

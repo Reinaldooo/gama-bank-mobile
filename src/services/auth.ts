@@ -1,12 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface AuthDetails  {
+export interface AuthDetails {
   token: string | null;
   login: string | null;
   userName: string | null;
-};
+}
 
-export const isAuth = async () : Promise< AuthDetails | undefined>  => {
+export const isAuth = async (): Promise<AuthDetails | undefined> => {
   try {
     const token = await AsyncStorage.getItem("@tokenApp");
     const login = await AsyncStorage.getItem("@loginApp");
@@ -23,9 +23,7 @@ export const isAuth = async () : Promise< AuthDetails | undefined>  => {
       token: null,
       userName: null,
     };
-  }catch(e) {
-      console.log(e);
+  } catch (e) {
+    console.log(e);
   }
-}
-
-
+};
