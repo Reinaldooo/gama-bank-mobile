@@ -19,11 +19,11 @@ export default function CreateAccount() {
         <ContainerScroll>
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Peça sua conta e cartão de crédito do Gama Bank" subtitle={null} pdHorizontal="40px">
-                    <InputLoginRegister _mTop="0" placeholder="Digite seu Usuário"/>
+                    <InputLoginRegister _mTop="0" placeholder="Digite seu CPF"/>
+                    <InputLoginRegister _mTop="40px" placeholder="Escolha um nome de Usuário"/>
+                    <InputLoginRegister _mTop="40px" placeholder="Nome Completo"/>
                     <InputLoginRegister _mTop="40px" placeholder="Digite sua Senha"/>
-                    <InputLoginRegister _mTop="40px" placeholder="Digite sua Senha"/>
-                    <InputLoginRegister _mTop="40px" placeholder="Digite sua Senha"/>
-                    <InputLoginRegister _mTop="40px" placeholder="Digite sua Senha"/>
+                    <InputLoginRegister _mTop="40px" placeholder="Confirme sua Senha"/>
                     <ButtonPrimary title="Continuar" iconName="arrow-right" iconColor="#9B9B9B" iconSize={25}
                                    marginTop="40px" marginBottom="30px" bgColor="#D8D8D8" color="#9B9B9B"/>
                     <LinksBottom onPress={navLogin}><Feather name="chevron-left" size={13}

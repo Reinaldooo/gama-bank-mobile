@@ -6,7 +6,7 @@ interface InterfaceContainerCard {
 }
 
 export const ContainerCard = styled.View<InterfaceContainerCard>`
-  width: ${Dimensions.get('window').width - 60};
+  width: ${Dimensions.get('window').width - 60}px;
   background: #FFFFFF;
   border-radius: 15px;
   justify-content: center;

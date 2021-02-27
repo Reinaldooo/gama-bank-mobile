@@ -19,6 +19,10 @@ export default function Login() {
         navigation.navigate('CreateAccount')
     }
 
+    function navDashboard() {
+        navigation.navigate('DashboardTabNavigator')
+    }
+
     return (
         <ContainerScroll>
             <ContainerViewLoginRegister>
@@ -27,6 +31,7 @@ export default function Login() {
                     <InputLoginRegister _mTop="60px" placeholder="Digite sua Senha"/>
                     <ButtonPrimary title="Entrar" iconName="arrow-right" iconColor="#FFF" iconSize={25} marginTop="60px" marginBottom="30px" />
                     <LinksBottom onPress={navForgetPassword}>Esqueci minha senha <Feather name="chevron-right" size={13} color="#8C52E5" /></LinksBottom>
+                    <LinksBottom onPress={navDashboard}>Dashboard <Feather name="chevron-right" size={13} color="#8C52E5" /></LinksBottom>
                     <LinksBottom onPress={navCreateAccount}>Ainda não sou cliente <Feather name="chevron-right" size={13} color="#8C52E5" /></LinksBottom>
                 </WhiteCardLoginRegister>
 
