@@ -13,6 +13,7 @@ interface ButtonPrimaryProps extends RectButtonProperties {
   padding?: string;
   bgColor?: string;
   color?: string;
+  _loading?: boolean;
 }
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
@@ -25,6 +26,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   padding,
   bgColor,
   color,
+  _loading,
   ...rest
 }) => {
   return (
@@ -33,6 +35,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
       _padding={padding}
       _mBottom={marginBottom}
       _bgColor={bgColor}
+      _loading={_loading}
       {...rest}
     >
       <TitleCard _color={color}>{title}</TitleCard>
