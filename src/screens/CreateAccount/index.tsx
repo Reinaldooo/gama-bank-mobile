@@ -6,6 +6,7 @@ import WhiteCardLoginRegister from "../../components/WhiteCardLoginRegister";
 import Feather from "react-native-vector-icons/Feather";
 import ContainerViewLoginRegister from "../../components/ContainerViewLoginRegister";
 import ContainerScroll from "../../components/ContainerScrollView";
+import ContainerLogoGama from "../../components/LogoGama";
 
 export default function CreateAccount() {
 
@@ -15,8 +16,13 @@ export default function CreateAccount() {
         navigation.navigate('Login')
     }
 
+    function navAccountCreate() {
+        navigation.navigate('ConfirmAccountCreate')
+    }
+
     return (
         <ContainerScroll>
+            <ContainerLogoGama mTop="50px" mBottom="20px"/>
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Peça sua conta e cartão de crédito do Gama Bank" subtitle={null} pdHorizontal="40px">
                     <InputLoginRegister _mTop="0" placeholder="Digite seu CPF"/>
@@ -28,8 +34,10 @@ export default function CreateAccount() {
                                    marginTop="40px" marginBottom="30px" bgColor="#D8D8D8" color="#9B9B9B"/>
                     <LinksBottom onPress={navLogin}><Feather name="chevron-left" size={13}
                                                                      color="#8C52E5"/> Voltar para o Login</LinksBottom>
-                </WhiteCardLoginRegister>
 
+                    <LinksBottom onPress={navAccountCreate} style={{marginTop: 20}}>Conta Criada <Feather name="chevron-right" size={13}
+                                                                          color="#8C52E5"/></LinksBottom>
+                </WhiteCardLoginRegister>
             </ContainerViewLoginRegister>
         </ContainerScroll>
     );

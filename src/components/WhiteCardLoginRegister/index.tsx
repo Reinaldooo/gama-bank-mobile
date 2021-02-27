@@ -2,8 +2,7 @@ import React from "react";
 import {ContainerCard, TitleCard} from "./styles";
 
 interface WhiteCardGenericLoginRegisterProps {
-    title: string | null;
-    subtitle: string | null;
+    title?: string;
     pdHorizontal?: string;
 }
 

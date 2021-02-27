@@ -6,6 +6,7 @@ import WhiteCardLoginRegister from "../../components/WhiteCardLoginRegister";
 import Feather from "react-native-vector-icons/Feather";
 import ContainerViewLoginRegister from "../../components/ContainerViewLoginRegister";
 import ContainerScroll from "../../components/ContainerScrollView";
+import ContainerLogoGama from "../../components/LogoGama";
 
 export default function ForgotPasswd() {
 
@@ -21,6 +22,7 @@ export default function ForgotPasswd() {
 
     return (
         <ContainerScroll>
+            <ContainerLogoGama mTop="50px" mBottom="20px"/>
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Redefinir senha" subtitle={null}>
                     <InputLoginRegister placeholder="Digite seu E-mail"/>

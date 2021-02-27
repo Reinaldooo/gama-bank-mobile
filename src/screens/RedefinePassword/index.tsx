@@ -6,6 +6,7 @@ import WhiteCardLoginRegister from "../../components/WhiteCardLoginRegister";
 import Feather from "react-native-vector-icons/Feather";
 import ContainerScroll from "../../components/ContainerScrollView";
 import ContainerViewLoginRegister from "../../components/ContainerViewLoginRegister";
+import ContainerLogoGama from "../../components/LogoGama";
 
 export default function RedefinePassword() {
 
@@ -17,6 +18,7 @@ export default function RedefinePassword() {
 
     return (
         <ContainerScroll>
+            <ContainerLogoGama mTop="50px" mBottom="20px"/>
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Redefinir senha" subtitle={null}>
                     <InputLoginRegister placeholder="Nome do Usuário"/>

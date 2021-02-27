@@ -9,7 +9,6 @@ export default function Transfers() {
   return (
     <S.Container>
       <S.Title>Aqui será a tela de transferências</S.Title>
-      <ButtonPrimary title="Voltar" onPress={() => navigation.goBack()} />
     </S.Container>
   );
 }

@@ -12,7 +12,7 @@ const { Navigator, Screen } = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator() {
   return (
-    <Navigator>
+    <Navigator drawerPosition="right">
       <Screen name="DashboardHome" component={DashboardHome} />
     </Navigator>
   );

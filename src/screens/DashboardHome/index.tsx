@@ -1,9 +1,12 @@
 import React from "react";
 import {DrawerNavigationProp} from "@react-navigation/drawer";
-//
+import DrawerNavigator, {DrawerParamList} from "../../navigation/drawer";
+import ContainerScroll from "../../components/ContainerScrollView";
+import ContainerViewDashboard from "../../components/ContainerDashboard";
+import WhiteCardDashboard from "../../components/WhiteCardDashboard";
+import TextBalance from "../../components/TextBalance";
 import * as S from "./styles";
-import {DrawerParamList} from "../../navigation/drawer";
-import ButtonPrimary from "../../components/ButtonPrimary";
+import TextHistoricBalance from "../../components/TextHistoricBalance";
 
 type DashboardHomeNavigationProp = DrawerNavigationProp<DrawerParamList,
     "DashboardHome">;
@@ -14,11 +17,58 @@ type Props = {
 
 const DashboardHome: React.FC<Props> = ({navigation}) => {
     return (
-        <S.Container>
-            <S.Title>Home Dashboard</S.Title>
-            <ButtonPrimary title="Abrir drawer" iconName="arrow-right" iconColor="#FFF" iconSize={25} marginTop="60px"
-                           marginBottom="30px" onPress={() => navigation.openDrawer()}/>
-        </S.Container>
+        <ContainerScroll>
+            <ContainerViewDashboard>
+                <S.HeaderDashboard>
+                    <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
+                    <S.IconHeaderDashboard onPress={() => navigation.openDrawer()}>
+                        <S.ImgIconHeaderDashboard source={require('../../assets/icon-user.png')}/>
+                    </S.IconHeaderDashboard>
+                </S.HeaderDashboard>
+                <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
+                    <S.HeaderCard>
+                        <S.IconHeaderCard source={require('../../assets/icon-money.png')}/>
+                        <S.TextHeaderCard>Saldo da conta</S.TextHeaderCard>
+                    </S.HeaderCard>
+                    <S.ContentCard>
+                        <TextBalance>
+                            R$: 1.890,00
+                        </TextBalance>
+                        <TextHistoricBalance>
+                            Lançamentos de débito: R$ 22,50
+                        </TextHistoricBalance>
+                    </S.ContentCard>
+                </WhiteCardDashboard>
+                <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
+                    <S.HeaderCard>
+                        <S.IconHeaderCard source={require('../../assets/icon-money.png')}/>
+                        <S.TextHeaderCard>Planos de conta</S.TextHeaderCard>
+                    </S.HeaderCard>
+                    <S.PlanAccountContentCard>
+                        <TextBalance>
+                            R$: 1.890,00
+                        </TextBalance>
+                        <TextHistoricBalance>
+                            Tipo do plano: Receita
+                        </TextHistoricBalance>
+                    </S.PlanAccountContentCard>
+                    <S.PlanAccountCard>
+                        <S.TextExpense>
+                            Tipo do plano: Despesas
+                        </S.TextExpense>
+                        <TextBalance _Color="#F45F5F">
+                            - R$: 1.890,00
+                        </TextBalance>
+                    </S.PlanAccountCard>
+                </WhiteCardDashboard>
+                <WhiteCardDashboard _MarginBottom="90px" _Padding="20px">
+                    <S.HeaderCard>
+                        <S.IconHeaderCard source={require('../../assets/icon-money.png')}/>
+                        <S.TextHeaderCard>Últimos Lançamentos</S.TextHeaderCard>
+                    </S.HeaderCard>
+                </WhiteCardDashboard>
+            </ContainerViewDashboard>
+        </ContainerScroll>
     );
 };
 

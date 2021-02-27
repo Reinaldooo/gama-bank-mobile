@@ -4,6 +4,6 @@ import {ScrollView} from "react-native-gesture-handler";
 
 export const ContainerScrollView = styled(ScrollView)`
   width: ${Dimensions.get('window').width}px;
-  height: ${Dimensions.get("window").height}px;
+  height: ${Dimensions.get('window').height}px;
   background-color: #A100FF;
 `;

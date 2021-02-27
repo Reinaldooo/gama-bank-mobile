@@ -6,6 +6,7 @@ import WhiteCardLoginRegister from "../../components/WhiteCardLoginRegister";
 import Feather from "react-native-vector-icons/Feather";
 import ContainerScroll from "../../components/ContainerScrollView";
 import ContainerViewLoginRegister from "../../components/ContainerViewLoginRegister";
+import ContainerLogoGama from "../../components/LogoGama";
 
 export default function Login() {
 
@@ -25,6 +26,7 @@ export default function Login() {
 
     return (
         <ContainerScroll>
+            <ContainerLogoGama mTop="50px" mBottom="20px"/>
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar." subtitle={null}>
                     <InputLoginRegister placeholder="Digite seu Usuário"/>

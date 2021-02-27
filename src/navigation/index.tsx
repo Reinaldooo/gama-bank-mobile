@@ -8,6 +8,7 @@ import ForgotPasswd from "../screens/ForgotPasswd";
 import RedefinePassword from "../screens/RedefinePassword";
 import DashboardTabNavigator from "./dashboard";
 import DrawerNavigator from "./drawer";
+import ConfirmAccountCreate from "../screens/ConfirmAccountCreate";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   RedefinePassword: undefined;
   DrawerNavigator: undefined;
   DashboardTabNavigator: undefined;
+  ConfirmAccountCreate: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -28,6 +30,7 @@ export default function Navigation() {
         <RootStack.Screen name="ForgotPasswd" component={ForgotPasswd} />
         <RootStack.Screen name="CreateAccount" component={CreateAccount} />
         <RootStack.Screen name="RedefinePassword" component={RedefinePassword} />
+        <RootStack.Screen name="ConfirmAccountCreate" component={ConfirmAccountCreate} />
         <RootStack.Screen
           name="DashboardTabNavigator"
           component={DashboardTabNavigator}

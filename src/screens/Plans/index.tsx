@@ -9,7 +9,6 @@ export default function Plans() {
   return (
     <S.Container>
       <S.Title>Aqui será a tela de planos</S.Title>
-      <ButtonPrimary title="Voltar" onPress={() => navigation.goBack()} />
     </S.Container>
   );
 }
