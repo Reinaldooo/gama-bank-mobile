@@ -1,14 +1,13 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import React from 'react';
+import { Provider } from 'react-redux';
 //
-import Navigation from "./src/navigation";
+import Welcome from './src/screens/Welcome';
+import store from './src/store';
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <Navigation />
-      <StatusBar style="auto" />
-    </SafeAreaProvider>
-  );
+    return (
+        <Provider store={store}>
+            <Welcome />
+        </Provider>
+    );
 }

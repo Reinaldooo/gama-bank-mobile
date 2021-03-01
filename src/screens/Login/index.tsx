@@ -1,17 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import { LinksBottom } from './styles';
-import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import Feather from 'react-native-vector-icons/Feather';
-import ContainerScroll from '../../components/ContainerScrollView';
-import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
-import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
+import { FormHandles } from '@unform/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+//
+import ButtonPrimary from '../../components/ButtonPrimary';
+import { LinksBottom, LoginForm } from './styles';
+import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
+import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
+import ContainerScroll from '../../components/ContainerScrollView';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
-import { FormHandles } from '@unform/core';
+import { logInUser } from '../../store/modules/user/actions';
+import ContainerLogoGama from '../../components/LogoGama';
 
 interface LoginForm {
     login: string;
@@ -20,25 +24,8 @@ interface LoginForm {
 
 export default function Login() {
     const navigation = useNavigation();
-
-    function navForgetPassword() {
-        navigation.navigate('ForgotPasswd');
-    }
-
-    function navCreateAccount() {
-        navigation.navigate('CreateAccount');
-    }
-
-    function navDashboard() {
-        navigation.navigate('DashboardTabNavigator');
-    }
-
-    const submitFormButton = () => {
-        formRef.current?.submitForm();
-    };
-
+    const dispatch = useDispatch();
     const formRef = useRef<FormHandles>(null);
-    const [loading, setLoading] = useState(false);
 
     async function loginSysGama(data: LoginForm) {
         const { login, passwd } = data;
@@ -59,24 +46,28 @@ export default function Login() {
                 senha: passwd,
             };
 
-            setLoading(true);
-
             // This has to be reset here and re-inserted below because the login
             // endpoint will break if the request has an old Authorization header
             api.defaults.headers.Authorization = null;
 
-            await api.post(`login`, postData).then(({ data }) => {
-                localStorage.setItem('@tokenApp', data.token);
-                localStorage.setItem('@loginApp', data.usuario.login);
-                localStorage.setItem(
+            await api.post(`login`, postData).then(async ({ data }) => {
+                await AsyncStorage.clear();
+                const token = ['@tokenApp', data.token];
+                const login = ['@loginApp', data.usuario.login];
+                const userName = [
                     '@userNameApp',
-                    data.usuario.nome.split(' ')[0]
-                );
+                    data.usuario.nome.split(' ')[0],
+                ];
+                await AsyncStorage.multiSet([token, login, userName]);
                 api.defaults.headers.Authorization = data.token;
+                dispatch(
+                    logInUser({
+                        token: token[1],
+                        userName: userName[1],
+                        login: login[1],
+                    })
+                );
             });
-            console.log('deu certo');
-
-            navDashboard();
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
@@ -85,15 +76,28 @@ export default function Login() {
                 formRef.current?.setErrors(errors);
                 return;
             }
-            setLoading(false);
+            console.log(err);
         }
     }
 
+    function navForgetPassword() {
+        navigation.navigate('ForgotPasswd');
+    }
+
+    function navCreateAccount() {
+        navigation.navigate('CreateAccount');
+    }
+
+    const submitFormButton = () => {
+        formRef.current?.submitForm();
+    };
+
     return (
         <ContainerScroll>
+            <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
-                    <Form ref={formRef} onSubmit={loginSysGama}>
+                    <LoginForm ref={formRef} onSubmit={loginSysGama}>
                         <Input
                             name="login"
                             placeholder="Digite seu usuário"
@@ -134,7 +138,7 @@ export default function Login() {
                                 color="#8C52E5"
                             />
                         </LinksBottom>
-                    </Form>
+                    </LoginForm>
                 </WhiteCardLoginRegister>
             </ContainerViewLoginRegister>
         </ContainerScroll>
