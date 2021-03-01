@@ -66,6 +66,51 @@ const DashboardHome: React.FC<Props> = ({navigation}) => {
                         <S.IconHeaderCard source={require('../../assets/icon-money.png')}/>
                         <S.TextHeaderCard>Últimos Lançamentos</S.TextHeaderCard>
                     </S.HeaderCard>
+                    <S.RowLastHistoric>
+                        <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
+                        <TextBalance _Color="#F45F5F" _mTop="10px">
+                            - R$: 1.890,00
+                        </TextBalance>
+                        <S.TextDataHistoric>
+                            11 de Fev.
+                        </S.TextDataHistoric>
+                    </S.RowLastHistoric>
+                    <S.RowLastHistoric>
+                        <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
+                        <TextBalance _Color="#F45F5F" _mTop="10px">
+                            - R$: 1.890,00
+                        </TextBalance>
+                        <S.TextDataHistoric>
+                            11 de Fev.
+                        </S.TextDataHistoric>
+                    </S.RowLastHistoric>
+                    <S.RowLastHistoric>
+                        <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
+                        <TextBalance _mTop="10px">
+                            R$: 1.890,00
+                        </TextBalance>
+                        <S.TextDataHistoric>
+                            11 de Fev.
+                        </S.TextDataHistoric>
+                    </S.RowLastHistoric>
+                    <S.RowLastHistoric>
+                        <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
+                        <TextBalance _Color="#F45F5F" _mTop="10px">
+                            - R$: 1.890,00
+                        </TextBalance>
+                        <S.TextDataHistoric>
+                            11 de Fev.
+                        </S.TextDataHistoric>
+                    </S.RowLastHistoric>
+                    <S.RowLastHistoric>
+                        <S.LineRowSeparatorHistoric>|</S.LineRowSeparatorHistoric>
+                        <TextBalance _mTop="10px">
+                            - R$: 1.890,00
+                        </TextBalance>
+                        <S.TextDataHistoric>
+                            11 de Fev.
+                        </S.TextDataHistoric>
+                    </S.RowLastHistoric>
                 </WhiteCardDashboard>
             </ContainerViewDashboard>
         </ContainerScroll>
