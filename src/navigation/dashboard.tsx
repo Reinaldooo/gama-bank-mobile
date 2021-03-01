@@ -41,8 +41,8 @@ export default function DashboardTabNavigator() {
                     height: 90,
                     justifyContent: "center",
                     alignItems: "center",
-                    borderTopLeftRadius: 30,
-                    borderTopRightRadius: 30
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15
                 },
                 tabStyle: {
                     backgroundColor: "transparent",
