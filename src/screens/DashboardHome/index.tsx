@@ -19,6 +19,7 @@ import ContainerViewDashboard from '../../components/ContainerDashboard';
 import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import TextBalance from '../../components/TextBalance';
 import TextHistoricBalance from '../../components/TextHistoricBalance';
+import MoneyLoader from '../../components/MoneyLoader';
 
 type DashboardHomeNavigationProp = DrawerNavigationProp<
     DrawerParamList,
@@ -32,9 +33,14 @@ type Props = {
 const DashboardHome: React.FC<Props> = ({ navigation }) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
+    const { loading } = useSelector((state: IRootState) => state.accounts);
 
     async function removeAuthData() {
-        await AsyncStorage.clear();
+        await AsyncStorage.multiRemove([
+            '@tokenApp',
+            '@loginApp',
+            '@userNameApp',
+        ]);
         dispatch(logOutUser());
     }
 
@@ -46,11 +52,11 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
             fim: `${currentMonth!.year}-${currentMonth!.month}-${
                 currentMonth!.lastDay
             }`,
-            login: user?.login,
+            login: user!.login,
         };
 
         const headers = {
-            Authorization: user?.token,
+            Authorization: user!.token,
         };
 
         async function getApiInfo() {
@@ -66,6 +72,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
 
                     api.get('/lancamentos/planos-conta', {
                         params,
+                        headers,
                     }),
                 ]);
                 dispatch(accountDataSuccess(accounts));
@@ -82,101 +89,113 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
 
     return (
         <ContainerScroll>
-            <ContainerViewDashboard>
-                <S.HeaderDashboard>
-                    <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
-                    <S.IconHeaderDashboard
-                        onPress={() => navigation.openDrawer()}
-                    >
-                        <S.ImgIconHeaderDashboard
-                            source={require('../../assets/icon-user.png')}
-                        />
-                    </S.IconHeaderDashboard>
-                </S.HeaderDashboard>
-                <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
-                    <S.HeaderCard>
-                        <S.IconHeaderCard
-                            source={require('../../assets/icon-money.png')}
-                        />
-                        <S.TextHeaderCard>Saldo da conta</S.TextHeaderCard>
-                    </S.HeaderCard>
-                    <S.ContentCard>
-                        <TextBalance>R$: 1.890,00</TextBalance>
-                        <TextHistoricBalance>
-                            Lançamentos de débito: R$ 22,50
-                        </TextHistoricBalance>
-                    </S.ContentCard>
-                </WhiteCardDashboard>
-                <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
-                    <S.HeaderCard>
-                        <S.IconHeaderCard
-                            source={require('../../assets/icon-money.png')}
-                        />
-                        <S.TextHeaderCard>Planos de conta</S.TextHeaderCard>
-                    </S.HeaderCard>
-                    <S.PlanAccountContentCard>
-                        <TextBalance>R$: 1.890,00</TextBalance>
-                        <TextHistoricBalance>
-                            Tipo do plano: Receita
-                        </TextHistoricBalance>
-                    </S.PlanAccountContentCard>
-                    <S.PlanAccountCard>
-                        <S.TextExpense>Tipo do plano: Despesas</S.TextExpense>
-                        <TextBalance _Color="#F45F5F">
-                            - R$: 1.890,00
-                        </TextBalance>
-                    </S.PlanAccountCard>
-                </WhiteCardDashboard>
-                <WhiteCardDashboard _MarginBottom="90px" _Padding="20px">
-                    <S.HeaderCard>
-                        <S.IconHeaderCard
-                            source={require('../../assets/icon-money.png')}
-                        />
-                        <S.TextHeaderCard>Últimos Lançamentos</S.TextHeaderCard>
-                    </S.HeaderCard>
-                    <S.RowLastHistoric>
-                        <S.LineRowSeparatorHistoric>
-                            |
-                        </S.LineRowSeparatorHistoric>
-                        <TextBalance _Color="#F45F5F" _mTop="10px">
-                            - R$: 1.890,00
-                        </TextBalance>
-                        <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
-                    </S.RowLastHistoric>
-                    <S.RowLastHistoric>
-                        <S.LineRowSeparatorHistoric>
-                            |
-                        </S.LineRowSeparatorHistoric>
-                        <TextBalance _Color="#F45F5F" _mTop="10px">
-                            - R$: 1.890,00
-                        </TextBalance>
-                        <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
-                    </S.RowLastHistoric>
-                    <S.RowLastHistoric>
-                        <S.LineRowSeparatorHistoric>
-                            |
-                        </S.LineRowSeparatorHistoric>
-                        <TextBalance _mTop="10px">R$: 1.890,00</TextBalance>
-                        <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
-                    </S.RowLastHistoric>
-                    <S.RowLastHistoric>
-                        <S.LineRowSeparatorHistoric>
-                            |
-                        </S.LineRowSeparatorHistoric>
-                        <TextBalance _Color="#F45F5F" _mTop="10px">
-                            - R$: 1.890,00
-                        </TextBalance>
-                        <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
-                    </S.RowLastHistoric>
-                    <S.RowLastHistoric>
-                        <S.LineRowSeparatorHistoric>
-                            |
-                        </S.LineRowSeparatorHistoric>
-                        <TextBalance _mTop="10px">- R$: 1.890,00</TextBalance>
-                        <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
-                    </S.RowLastHistoric>
-                </WhiteCardDashboard>
-            </ContainerViewDashboard>
+            {loading ? (
+                <MoneyLoader />
+            ) : (
+                <ContainerViewDashboard>
+                    <S.HeaderDashboard>
+                        <S.TextHeaderDashboard>
+                            Olá, Usuário
+                        </S.TextHeaderDashboard>
+                        <S.IconHeaderDashboard
+                            onPress={() => navigation.openDrawer()}
+                        >
+                            <S.ImgIconHeaderDashboard
+                                source={require('../../assets/icon-user.png')}
+                            />
+                        </S.IconHeaderDashboard>
+                    </S.HeaderDashboard>
+                    <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
+                        <S.HeaderCard>
+                            <S.IconHeaderCard
+                                source={require('../../assets/icon-money.png')}
+                            />
+                            <S.TextHeaderCard>Saldo da conta</S.TextHeaderCard>
+                        </S.HeaderCard>
+                        <S.ContentCard>
+                            <TextBalance>R$: 1.890,00</TextBalance>
+                            <TextHistoricBalance>
+                                Lançamentos de débito: R$ 22,50
+                            </TextHistoricBalance>
+                        </S.ContentCard>
+                    </WhiteCardDashboard>
+                    <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
+                        <S.HeaderCard>
+                            <S.IconHeaderCard
+                                source={require('../../assets/icon-money.png')}
+                            />
+                            <S.TextHeaderCard>Planos de conta</S.TextHeaderCard>
+                        </S.HeaderCard>
+                        <S.PlanAccountContentCard>
+                            <TextBalance>R$: 1.890,00</TextBalance>
+                            <TextHistoricBalance>
+                                Tipo do plano: Receita
+                            </TextHistoricBalance>
+                        </S.PlanAccountContentCard>
+                        <S.PlanAccountCard>
+                            <S.TextExpense>
+                                Tipo do plano: Despesas
+                            </S.TextExpense>
+                            <TextBalance _Color="#F45F5F">
+                                - R$: 1.890,00
+                            </TextBalance>
+                        </S.PlanAccountCard>
+                    </WhiteCardDashboard>
+                    <WhiteCardDashboard _MarginBottom="90px" _Padding="20px">
+                        <S.HeaderCard>
+                            <S.IconHeaderCard
+                                source={require('../../assets/icon-money.png')}
+                            />
+                            <S.TextHeaderCard>
+                                Últimos Lançamentos
+                            </S.TextHeaderCard>
+                        </S.HeaderCard>
+                        <S.RowLastHistoric>
+                            <S.LineRowSeparatorHistoric>
+                                |
+                            </S.LineRowSeparatorHistoric>
+                            <TextBalance _Color="#F45F5F" _mTop="10px">
+                                - R$: 1.890,00
+                            </TextBalance>
+                            <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
+                        </S.RowLastHistoric>
+                        <S.RowLastHistoric>
+                            <S.LineRowSeparatorHistoric>
+                                |
+                            </S.LineRowSeparatorHistoric>
+                            <TextBalance _Color="#F45F5F" _mTop="10px">
+                                - R$: 1.890,00
+                            </TextBalance>
+                            <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
+                        </S.RowLastHistoric>
+                        <S.RowLastHistoric>
+                            <S.LineRowSeparatorHistoric>
+                                |
+                            </S.LineRowSeparatorHistoric>
+                            <TextBalance _mTop="10px">R$: 1.890,00</TextBalance>
+                            <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
+                        </S.RowLastHistoric>
+                        <S.RowLastHistoric>
+                            <S.LineRowSeparatorHistoric>
+                                |
+                            </S.LineRowSeparatorHistoric>
+                            <TextBalance _Color="#F45F5F" _mTop="10px">
+                                - R$: 1.890,00
+                            </TextBalance>
+                            <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
+                        </S.RowLastHistoric>
+                        <S.RowLastHistoric>
+                            <S.LineRowSeparatorHistoric>
+                                |
+                            </S.LineRowSeparatorHistoric>
+                            <TextBalance _mTop="10px">
+                                - R$: 1.890,00
+                            </TextBalance>
+                            <S.TextDataHistoric>11 de Fev.</S.TextDataHistoric>
+                        </S.RowLastHistoric>
+                    </WhiteCardDashboard>
+                </ContainerViewDashboard>
+            )}
         </ContainerScroll>
     );
 };

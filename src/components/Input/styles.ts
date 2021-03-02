@@ -9,7 +9,9 @@ export const Container = styled.View<ContainerProps>`
     width: 100%;
     height: 50px;
     background-color: #fff;
-    border-radius: 10px;
+    border-bottom-width: 1px;
+    border-bottom-color: #878686;
+    border-style: solid;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -21,8 +23,9 @@ export const Container = styled.View<ContainerProps>`
     ${(props) =>
         props.isErrored &&
         css`
-            border-color: #e6505c;
-            border-width: 2px;
+            border-bottom-width: 2px;
+            border-bottom-color: #e6505c;
+            border-style: solid;
         `}
 `;
 
@@ -33,9 +36,6 @@ export const Icon = styled(Feather)`
 export const TextInput = styled.TextInput`
     color: #999;
     font-size: 17px;
-    border-bottom-width: 1px;
-    border-bottom-color: #878686;
-    border-style: solid;
     width: 100%;
     padding-bottom: 5px;
 `;

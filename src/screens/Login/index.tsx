@@ -25,6 +25,7 @@ interface ILoginForm {
 export default function Login() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     const formRef = useRef<FormHandles>(null);
 
     async function loginSysGama(data: ILoginForm) {
@@ -41,6 +42,8 @@ export default function Login() {
 
             await schema.validate(data, { abortEarly: false });
 
+            setLoading(true);
+
             const postData = {
                 usuario: login,
                 senha: passwd,
@@ -51,7 +54,11 @@ export default function Login() {
             api.defaults.headers.Authorization = null;
 
             await api.post(`login`, postData).then(async ({ data }) => {
-                await AsyncStorage.clear();
+                await AsyncStorage.multiRemove([
+                    '@tokenApp',
+                    '@loginApp',
+                    '@userNameApp',
+                ]);
                 const token = ['@tokenApp', data.token];
                 const login = ['@loginApp', data.usuario.login];
                 const userName = [
@@ -69,6 +76,7 @@ export default function Login() {
                 );
             });
         } catch (err) {
+            setLoading(false);
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 // This is the way to set errors with unform. Each key is the input name and
@@ -96,10 +104,7 @@ export default function Login() {
         <ContainerScroll>
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
-                <WhiteCardLoginRegister
-                    subtitle=""
-                    title="Seja bem vindo, informe seus dados para logar."
-                >
+                <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
                     <LoginForm ref={formRef} onSubmit={loginSysGama}>
                         <Input
                             name="login"
@@ -124,6 +129,7 @@ export default function Login() {
                             bgColor="#63dc3f"
                             color="#fff"
                             onPress={submitFormButton}
+                            _loading={loading}
                         />
                         <LinksBottom onPress={navForgetPassword}>
                             Esqueci minha senha{' '}
