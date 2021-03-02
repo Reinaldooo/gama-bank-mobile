@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ContainerScroll from '../../components/ContainerScrollView';
@@ -16,6 +16,8 @@ import api from '../../services/api';
 import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Button, Platform } from 'react-native';
 
 interface IDepositForm {
     data: string;
@@ -26,92 +28,115 @@ interface IDepositForm {
 export default function Deposit() {
     const formRef = useRef<FormHandles>(null);
     const dispatch = useDispatch();
-    const { debitAccount, transactionTypes } = useSelector(
-        (state: IDashboardState) => state
-    );
-    const { user } = useSelector((state: IRootState) => state.user);
 
-    async function handleSubmit({ descricao, data, valor }: IDepositForm) {
-        try {
-            valor = createFloat(valor);
-            // Start by cleaning errors
-            formRef.current?.setErrors({});
+    const [date, setDate] = useState<Date>(new Date());
+    const [show, setShow] = useState(false);
+    const [mode, setMode] = useState<'date' | 'time'>('date');
 
-            const schema = Yup.object({
-                data: Yup.string().required('Campo obrigatório'),
-                descricao: Yup.string().required('Campo obrigatório'),
-                valor: Yup.number()
-                    .max(9999.99, 'Valor máximo de R$ 9.999,99')
-                    .required('Campo obrigatório'),
-            });
+    // const { debitAccount, transactionTypes } = useSelector(
+    //     (state: IDashboardState) => state
+    // );
+    // const { user } = useSelector((state: IRootState) => state.user);
 
-            await schema.validate(
-                { descricao, data, valor },
-                { abortEarly: false }
-            );
+    // async function handleSubmit({ descricao, data, valor }: IDepositForm) {
+    //     try {
+    //         valor = createFloat(valor);
+    //         // Start by cleaning errors
+    //         formRef.current?.setErrors({});
 
-            const postData = {
-                conta: debitAccount!.id,
-                data,
-                descricao,
-                login: user?.login,
-                valor,
-                planoConta: transactionTypes!['R'],
-            };
+    //         const schema = Yup.object({
+    //             data: Yup.string().required('Campo obrigatório'),
+    //             descricao: Yup.string().required('Campo obrigatório'),
+    //             valor: Yup.number()
+    //                 .max(9999.99, 'Valor máximo de R$ 9.999,99')
+    //                 .required('Campo obrigatório'),
+    //         });
 
-            await api.post(`lancamentos`, postData).then((response) => {
-                if (response.status === 200) {
-                    // history.push("/dashboard");
-                } else {
-                    console.log('deu erro');
-                }
-            });
+    //         await schema.validate(
+    //             { descricao, data, valor },
+    //             { abortEarly: false }
+    //         );
 
-            // dispatch(
-            //     debitTransactionSuccess({
-            //         ...postData,
-            //         // This id is temporary, it will be replaced with the real one after a reload
-            //         // id: shortid(),
-            //         planoConta: transactionTypes!['R'],
-            //         valor: Number(valor),
-            //     })
-            // );
+    //         const postData = {
+    //             conta: debitAccount!.id,
+    //             data,
+    //             descricao,
+    //             login: user?.login,
+    //             valor,
+    //             planoConta: transactionTypes!['R'],
+    //         };
 
-            // history.push("/dashboard");
-        } catch (err) {
-            if (err instanceof Yup.ValidationError) {
-                const errors = getValidationErrors(err);
-                // This is the way to set errors with unform. Each key is the input name and
-                // it will be set on the 'error' variable coming from the useField hook in the Comp
-                formRef.current?.setErrors(errors);
-                return;
-            }
-        }
-    }
+    //         await api.post(`lancamentos`, postData).then((response) => {
+    //             if (response.status === 200) {
+    //                 // history.push("/dashboard");
+    //             } else {
+    //                 console.log('deu erro');
+    //             }
+    //         });
+
+    // dispatch(
+    //     debitTransactionSuccess({
+    //         ...postData,
+    //         // This id is temporary, it will be replaced with the real one after a reload
+    //         // id: shortid(),
+    //         planoConta: transactionTypes!['R'],
+    //         valor: Number(valor),
+    //     })
+    // );
+
+    // history.push("/dashboard");
+    //     } catch (err) {
+    //         if (err instanceof Yup.ValidationError) {
+    //             const errors = getValidationErrors(err);
+    //             // This is the way to set errors with unform. Each key is the input name and
+    //             // it will be set on the 'error' variable coming from the useField hook in the Comp
+    //             formRef.current?.setErrors(errors);
+    //             return;
+    //         }
+    //     }
+    // }
+
+    const showDatepicker = () => {
+        showMode('date');
+    };
+    const showMode = (currentMode: any) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+
+    const onDate = (_: any, selectedDate: any) => {
+        setDate(selectedDate);
+        console.log(selectedDate);
+    };
+
+    function handleSubmit() {}
+
     return (
         <ContainerScroll>
+            {console.log(date)}
             <ContainerViewDashboard>
                 <WhiteCardDashboard _MarginTop="30px">
                     <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
                     <S.DepositForm ref={formRef} onSubmit={handleSubmit}>
                         <Input
-                            name="destinatario"
-                            placeholder="Destinatário"
+                            name="Descrição"
+                            placeholder="Descrição"
                             autoCapitalize="none"
                             autoCorrect={false}
                         />
-                        <Input
-                            name="plano"
-                            placeholder="Plano de conta"
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                        <Button
+                            onPress={showDatepicker}
+                            title="Show date picker!"
                         />
-                        <Input
-                            name="transacao"
-                            placeholder="Tipo de transação"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
+                        {show && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date!}
+                                mode={mode}
+                                onChange={onDate}
+                                display="default"
+                            />
+                        )}
                         <Input
                             name="valor"
                             placeholder="Valor de depósito"
