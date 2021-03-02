@@ -3,7 +3,6 @@ import {Dimensions} from "react-native";
 import {RectButton} from "react-native-gesture-handler";
 
 export const HeaderDashboard = styled.View`
-  margin-top: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,9 +18,25 @@ export const TextHeaderDashboard = styled.Text`
   color: #FBFBFB;
 `
 
+export const ContainerIcon = styled.View`
+  flex-flow: row;
+  width: 90px;
+  justify-content: space-between;
+`
+
 export const IconHeaderDashboard = styled(RectButton)`
   width: 100%;
   max-width: 33px;
+`
+
+export const IconEye = styled(RectButton)`
+  width: 100%;
+  max-width: 40px;
+`
+
+export const ImgIconEye = styled.Image`
+  width: 100%;
+  max-width: 40px;
 `
 
 export const ImgIconHeaderDashboard = styled.Image`
