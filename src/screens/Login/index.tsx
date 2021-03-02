@@ -17,7 +17,7 @@ import Input from '../../components/Input';
 import { logInUser } from '../../store/modules/user/actions';
 import ContainerLogoGama from '../../components/LogoGama';
 
-interface LoginForm {
+interface ILoginForm {
     login: string;
     passwd: string;
 }
@@ -27,7 +27,7 @@ export default function Login() {
     const dispatch = useDispatch();
     const formRef = useRef<FormHandles>(null);
 
-    async function loginSysGama(data: LoginForm) {
+    async function loginSysGama(data: ILoginForm) {
         const { login, passwd } = data;
 
         try {
@@ -96,7 +96,10 @@ export default function Login() {
         <ContainerScroll>
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
-                <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
+                <WhiteCardLoginRegister
+                    subtitle=""
+                    title="Seja bem vindo, informe seus dados para logar."
+                >
                     <LoginForm ref={formRef} onSubmit={loginSysGama}>
                         <Input
                             name="login"
@@ -114,12 +117,12 @@ export default function Login() {
                         <ButtonPrimary
                             title="Continuar"
                             iconName="arrow-right"
-                            iconColor="#9B9B9B"
+                            iconColor="#fff"
                             iconSize={25}
-                            marginTop="40px"
+                            marginTop="20px"
                             marginBottom="30px"
-                            bgColor="#D8D8D8"
-                            color="#9B9B9B"
+                            bgColor="#63dc3f"
+                            color="#fff"
                             onPress={submitFormButton}
                         />
                         <LinksBottom onPress={navForgetPassword}>

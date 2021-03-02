@@ -26,6 +26,4 @@ export const LinksBottom = styled.Text`
 
 export const LoginForm = styled(Form)`
     width: 100%;
-    margin: 0;
-    padding: 0;
 `;

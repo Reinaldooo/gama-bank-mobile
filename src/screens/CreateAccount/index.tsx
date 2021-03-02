@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { LinksBottom } from './styles';
+import { LinksBottom, CreateAccountForm } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import Feather from 'react-native-vector-icons/Feather';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
 import ContainerScroll from '../../components/ContainerScrollView';
-import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -79,10 +78,11 @@ export default function CreateAccount() {
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister
+                    subtitle=""
                     title="Peça sua conta e cartão de crédito do Gama Bank"
                     pdHorizontal="40px"
                 >
-                    <Form ref={formRef} onSubmit={handleSubmit}>
+                    <CreateAccountForm ref={formRef} onSubmit={handleSubmit}>
                         <Input
                             name="cpf"
                             placeholder="Digite seu CPF"
@@ -118,12 +118,12 @@ export default function CreateAccount() {
                         <ButtonPrimary
                             title="Continuar"
                             iconName="arrow-right"
-                            iconColor="#9B9B9B"
+                            iconColor="#fff"
                             iconSize={25}
-                            marginTop="40px"
+                            marginTop="20px"
                             marginBottom="30px"
-                            bgColor="#D8D8D8"
-                            color="#9B9B9B"
+                            bgColor="#63dc3f"
+                            color="#fff"
                             onPress={submitFormButton}
                         />
                         <LinksBottom onPress={navLogin}>
@@ -134,7 +134,7 @@ export default function CreateAccount() {
                             />{' '}
                             Voltar para o Login
                         </LinksBottom>
-                    </Form>
+                    </CreateAccountForm>
                 </WhiteCardLoginRegister>
             </ContainerViewLoginRegister>
         </ContainerScroll>

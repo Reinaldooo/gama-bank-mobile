@@ -8,12 +8,15 @@ interface ContainerProps {
 export const Container = styled.View<ContainerProps>`
     width: 100%;
     height: 50px;
-    padding: 0 16px;
     background-color: #fff;
     border-radius: 10px;
-    margin-bottom: 8px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    color: #999;
 
     ${(props) =>
         props.isErrored &&
@@ -24,11 +27,15 @@ export const Container = styled.View<ContainerProps>`
 `;
 
 export const Icon = styled(Feather)`
-    margin-right: 10px;
+    margin-right: 0px;
 `;
 
 export const TextInput = styled.TextInput`
-    flex: 1;
     color: #999;
-    font-size: 16px;
+    font-size: 17px;
+    border-bottom-width: 1px;
+    border-bottom-color: #878686;
+    border-style: solid;
+    width: 100%;
+    padding-bottom: 5px;
 `;
