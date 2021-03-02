@@ -1,12 +1,17 @@
-import styled from "styled-components/native";
+import { Form } from '@unform/mobile';
+import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
-  align-items: center;
-  flex: 1;
-  padding: 20px 50px;
+export const DepositForm = styled(Form)`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
-
-export const Title = styled.Text`
-  font-size: 20px;
-  margin-top: 50px;
+export const TextHeaderDashboard = styled.Text`
+    font-size: 26px;
+    font-weight: 700;
+    text-align: left;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 15px;
 `;
