@@ -1,9 +1,13 @@
 import React from "react";
 import {ContainerScrollView} from "./style";
 
-const ContainerScroll: React.FC = ({children}) => {
+interface ScrollViewProps {
+    _bgColor?: string;
+}
+
+const ContainerScroll: React.FC<ScrollViewProps> = ({children, _bgColor}) => {
     return (
-        <ContainerScrollView>
+        <ContainerScrollView _bgColor={_bgColor}>
             {children}
         </ContainerScrollView>
     );

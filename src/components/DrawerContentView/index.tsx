@@ -2,7 +2,7 @@ import React from "react";
 import {DrawerContent, HeaderDrawer, ButtonUserHeader, ButtonCloseHeader, ImageUser, ImageClose} from "./styles";
 
 interface NavigationProps {
-    navigation: any
+    navigation?: any
 }
 
 const DrawerContentView: React.FC<NavigationProps> = ({navigation, children}) => {

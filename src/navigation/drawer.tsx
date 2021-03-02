@@ -1,11 +1,6 @@
 import React from "react";
-import {createDrawerNavigator, DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
-import { NavigationContainer } from '@react-navigation/native';
+import {createDrawerNavigator, DrawerContentScrollView} from "@react-navigation/drawer";
 //
-import {Image, StyleSheet, Text, View} from "react-native";
-import {Avatar, Caption, Drawer, Paragraph, Switch, Title, TouchableRipple} from "react-native-paper";
-import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {RectButton} from "react-native-gesture-handler";
 import DashboardHome from "../screens/DashboardHome";
 import DrawerContentView from "../components/DrawerContentView";
 import DrawerContentInformation from "../components/DrawerContentInformation";
@@ -19,7 +14,7 @@ export type DrawerParamList = {
 function DrawerInfoUser() {
     return (
         <DrawerContentScrollView>
-            <DrawerContentView navigation={Navigator.defaultProps}>
+            <DrawerContentView>
                 <DrawerContentInformation title="Seu nome:" description="Nome do Usuário"/>
                 <DrawerContentInformation title="E-mail:" description="email@email.com"/>
                 <DrawerContentInformation title="Username:" description="UserName"/>
