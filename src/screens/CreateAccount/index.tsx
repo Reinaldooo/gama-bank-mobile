@@ -25,6 +25,14 @@ export default function CreateAccount() {
     const formRef = useRef<FormHandles>(null);
     const navigation = useNavigation();
 
+    const submitFormButton = () => {
+        formRef.current?.submitForm();
+    };
+
+    function navAccountCreated() {
+        navigation.navigate('ConfirmAccountCreate');
+    }
+
     function navLogin() {
         navigation.navigate('Login');
     }
@@ -53,7 +61,7 @@ export default function CreateAccount() {
                 senha: passwd,
             };
             await api.post('/usuarios', formData);
-            navLogin();
+            navAccountCreated();
         } catch (err) {
             console.log(err.message);
             if (err instanceof Yup.ValidationError) {
@@ -65,20 +73,12 @@ export default function CreateAccount() {
             }
         }
     }
-    const submitFormButton = () => {
-        formRef.current?.submitForm();
-    };
-
-    function navAccountCreate() {
-        navigation.navigate('ConfirmAccountCreate');
-    }
 
     return (
         <ContainerScroll>
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister
-                    subtitle=""
                     title="Peça sua conta e cartão de crédito do Gama Bank"
                     pdHorizontal="40px"
                 >
