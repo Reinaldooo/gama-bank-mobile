@@ -1,14 +1,5 @@
 import { DateInfo } from '../store/modules/accounts/types';
 
-export const formatBRL = (num: number | string): string => {
-    if (!num) return '';
-    if (typeof num === 'string') num = Number(num);
-    return new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    }).format(num);
-};
-
 export const brlMask = (value: string): string => {
     let cleanValue = value.replace(/\D/g, '');
 
