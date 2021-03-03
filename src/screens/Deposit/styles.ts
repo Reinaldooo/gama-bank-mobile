@@ -50,7 +50,6 @@ export const ContainerIcon = styled.View`
 export const CloseButton = styled(RectButton)`
     width: 100%;
     max-width: 30px;
-    margin-right: 40px;
 `;
 
 export const DepositForm = styled(Form)`
