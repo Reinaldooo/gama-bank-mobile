@@ -38,8 +38,8 @@ export default function Login() {
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                login: Yup.string().min(5).required('Cpf obrigatório.'),
-                passwd: Yup.string().required('Campo obrigatório'),
+                login: Yup.string().trim().min(5).required('Cpf obrigatório.'),
+                passwd: Yup.string().trim().required('Campo obrigatório'),
             });
 
             await schema.validate(data, { abortEarly: false });

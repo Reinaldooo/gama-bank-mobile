@@ -67,7 +67,7 @@ export default function Deposit() {
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                descricao: Yup.string().required('Campo obrigatório'),
+                descricao: Yup.string().trim().required('Campo obrigatório'),
                 valor: Yup.number()
                     .max(9999.99, 'Valor máximo de R$ 9.999,99')
                     .required('Campo obrigatório'),

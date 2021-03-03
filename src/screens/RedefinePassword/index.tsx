@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 import { TextInput } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 //
@@ -12,9 +13,24 @@ import ContainerScroll from '../../components/ContainerScrollView';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
 import ContainerLogoGama from '../../components/LogoGama';
 import Input from '../../components/Input';
+import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
+
+interface IResetPasswdForm {
+    passwd: string;
+    confirmPasswd: string;
+}
+
+interface IParams {
+    login: string;
+    senhaTemporaria: string;
+}
 
 export default function RedefinePassword() {
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const route = useRoute();
+    const params = route.params as IParams;
     const formRef = useRef<FormHandles>(null);
     const passwdConfirmInputRef = useRef<TextInput>(null);
 
@@ -26,6 +42,50 @@ export default function RedefinePassword() {
         formRef.current?.submitForm();
     };
 
+    async function resetPasswd({ passwd, confirmPasswd }: IResetPasswdForm) {
+        try {
+            // Start by cleaning errors
+            formRef.current?.setErrors({});
+            console.log(passwd);
+            console.log(confirmPasswd);
+
+            const schema = Yup.object({
+                passwd: Yup.string().trim().required('Senha obrigatória'),
+                confirmPasswd: Yup.string()
+                    .trim()
+                    .oneOf([Yup.ref('passwd'), null], 'Senhas diferentes'),
+            });
+
+            await schema.validate(
+                { passwd, confirmPasswd },
+                { abortEarly: false }
+            );
+
+            setLoading(true);
+
+            const postData = {
+                senha: passwd,
+                usuario: params.login,
+            };
+
+            await api.post(`altera-senha`, postData, {
+                params: { senhaTemporaria: params.senhaTemporaria },
+            });
+
+            navLogin();
+        } catch (err) {
+            setLoading(false);
+            if (err instanceof Yup.ValidationError) {
+                const errors = getValidationErrors(err);
+                // This is the way to set errors with unform. Each key is the input name and
+                // it will be set on the 'error' variable coming from the useField hook in the Comp
+                formRef.current?.setErrors(errors);
+                return;
+            }
+            console.log(err);
+        }
+    }
+
     return (
         <ContainerScroll>
             <ContainerLogoGama mTop="50px" mBottom="20px" />
@@ -34,7 +94,7 @@ export default function RedefinePassword() {
                     <Form
                         ref={formRef}
                         style={{ width: '100%' }}
-                        onSubmit={() => console.log('submit')}
+                        onSubmit={resetPasswd}
                     >
                         <Input
                             name="passwd"
@@ -48,7 +108,7 @@ export default function RedefinePassword() {
                         />
                         <Input
                             ref={passwdConfirmInputRef}
-                            name="passwdConfirm"
+                            name="confirmPasswd"
                             placeholder="Confirmar Nova Senha"
                             secureTextEntry
                             returnKeyType="send"
@@ -62,6 +122,7 @@ export default function RedefinePassword() {
                             marginTop="60px"
                             marginBottom="30px"
                             onPress={submitFormButton}
+                            _loading={loading}
                         />
                     </Form>
                     <LinksBottom onPress={navLogin}>

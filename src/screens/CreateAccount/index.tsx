@@ -49,14 +49,13 @@ export default function CreateAccount() {
         try {
             formRef.current?.setErrors({});
             const schema = Yup.object({
-                cpf: Yup.string().required('Cpf obrigatório.'),
-                name: Yup.string().required('Campo obrigatório'),
-                fullName: Yup.string().required('Campo obrigatório'),
-                passwd: Yup.string().required('Senha obrigatória'),
-                confirmPasswd: Yup.string().oneOf(
-                    [Yup.ref('passwd'), null],
-                    'Senhas diferentes'
-                ),
+                cpf: Yup.string().trim().required('Cpf obrigatório.'),
+                name: Yup.string().trim().required('Campo obrigatório'),
+                fullName: Yup.string().trim().required('Campo obrigatório'),
+                passwd: Yup.string().trim().required('Senha obrigatória'),
+                confirmPasswd: Yup.string()
+                    .trim()
+                    .oneOf([Yup.ref('passwd'), null], 'Senhas diferentes'),
             });
 
             await schema.validate(data, { abortEarly: false });
