@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, TextInput } from 'react-native';
 import shortid from 'shortid';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -25,6 +25,7 @@ interface IDepositForm {
 
 export default function Deposit() {
     const formRef = useRef<FormHandles>(null);
+    const valueInputRef = useRef<TextInput>(null);
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -146,6 +147,11 @@ export default function Deposit() {
                             name="descricao"
                             placeholder="Descrição"
                             autoCorrect={false}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                valueInputRef.current?.focus();
+                            }}
                         />
 
                         <Input
@@ -154,6 +160,7 @@ export default function Deposit() {
                             autoCapitalize="none"
                             keyboardType="number-pad"
                             autoCorrect={false}
+                            ref={valueInputRef}
                         />
 
                         <ButtonPrimary

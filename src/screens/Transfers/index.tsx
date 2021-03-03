@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, TextInput } from 'react-native';
 import shortid from 'shortid';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -29,6 +29,9 @@ export default function Transfers() {
     const navigation = useNavigation();
 
     const formRef = useRef<FormHandles>(null);
+    const descInputRef = useRef<TextInput>(null);
+    const valueInputRef = useRef<TextInput>(null);
+
     const dispatch = useDispatch();
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [date, setDate] = useState('');
@@ -157,11 +160,23 @@ export default function Transfers() {
                             name="destinatario"
                             placeholder="Destinatário"
                             autoCorrect={false}
+                            autoCapitalize="none"
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                descInputRef.current?.focus();
+                            }}
                         />
                         <Input
                             name="descricao"
                             placeholder="Descrição"
                             autoCorrect={false}
+                            ref={descInputRef}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                valueInputRef.current?.focus();
+                            }}
                         />
 
                         <Input
@@ -170,6 +185,7 @@ export default function Transfers() {
                             autoCapitalize="none"
                             keyboardType="number-pad"
                             autoCorrect={false}
+                            ref={valueInputRef}
                         />
 
                         <ButtonPrimary
