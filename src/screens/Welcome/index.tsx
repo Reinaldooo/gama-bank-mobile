@@ -14,11 +14,11 @@ export default function Welcome() {
     const dispatch = useDispatch();
 
     async function checkUser() {
-        const user = await isAuth();
-        if (user?.token) {
-            dispatch(logInUser(user));
-            setLoading(false);
-        }
+        // const user = await isAuth();
+        // if (user?.token) {
+        //     dispatch(logInUser(user));
+        //     setLoading(false);
+        // }
     }
 
     return loading ? (

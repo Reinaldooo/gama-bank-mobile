@@ -47,24 +47,21 @@ export const ContainerIcon = styled.View`
     margin-left: 90px;
 `;
 
-export const IconEye = styled(RectButton)`
+export const CloseButton = styled(RectButton)`
     width: 100%;
     max-width: 30px;
+    margin-right: 40px;
 `;
 
-export const ImgIconEye = styled.Image`
-    width: 100%;
-    max-width: 40px;
-`;
-
-export const ImgIconHeaderDashboard = styled.Image`
-    width: 100%;
-    max-width: 33px;
-`;
 export const DepositForm = styled(Form)`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+`;
+
+export const DateError = styled.Text`
+    margin-top: -20px;
+    color: #e6505c;
 `;

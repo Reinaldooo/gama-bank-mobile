@@ -13,7 +13,6 @@ import * as S from './styles';
 interface InputProps extends TextInputProps {
     name: string;
     icon?: string;
-    keyboardType?: any;
 }
 
 interface InputValueRef {
@@ -24,7 +23,7 @@ interface InputRef {
     focus(): void;
 }
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-    { name, icon, keyboardType, ...rest },
+    { name, icon, ...rest },
     ref
 ) => {
     // This is a very rare kind of component thats uses "useImperativeHandle"

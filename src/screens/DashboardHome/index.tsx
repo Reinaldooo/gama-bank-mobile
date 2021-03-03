@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //
 import * as S from './styles';
-import {DrawerParamList} from '../../navigation/drawer';
+import { DrawerParamList } from '../../navigation/drawer';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {getDateInfo} from '../../utils/helpers';
+import { getDateInfo } from '../../utils/helpers';
 import api from '../../services/api';
-import {IRootState} from '../../store';
-import {logOutUser} from '../../store/modules/user/actions';
+import { IRootState } from '../../store';
+import { logOutUser } from '../../store/modules/user/actions';
 import {
     accountDataSuccess,
     transactionTypesSuccess,
@@ -20,19 +20,25 @@ import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import TextBalance from '../../components/TextBalance';
 import TextHistoricBalance from '../../components/TextHistoricBalance';
 
-type DashboardHomeNavigationProp = DrawerNavigationProp<DrawerParamList,
-    'DashboardHome'>;
+type DashboardHomeNavigationProp = DrawerNavigationProp<
+    DrawerParamList,
+    'DashboardHome'
+>;
 
 type Props = {
     navigation: DashboardHomeNavigationProp;
 };
 
-const DashboardHome: React.FC<Props> = ({navigation}) => {
+const DashboardHome: React.FC<Props> = ({ navigation }) => {
     const dispatch = useDispatch();
-    const {user} = useSelector((state: IRootState) => state.user);
+    const { user } = useSelector((state: IRootState) => state.user);
 
     async function removeAuthData() {
-        await AsyncStorage.clear();
+        await AsyncStorage.multiRemove([
+            '@tokenApp',
+            '@loginApp',
+            '@userNameApp',
+        ]);
         dispatch(logOutUser());
     }
 
@@ -54,8 +60,8 @@ const DashboardHome: React.FC<Props> = ({navigation}) => {
         async function getApiInfo() {
             try {
                 const [
-                    {data: accounts},
-                    {data: tTypes},
+                    { data: accounts },
+                    { data: tTypes },
                 ] = await Promise.all([
                     api.get(`/dashboard`, {
                         params,
@@ -98,7 +104,6 @@ const DashboardHome: React.FC<Props> = ({navigation}) => {
                             />
                         </S.IconHeaderDashboard>
                     </S.ContainerIcon>
-
                 </S.HeaderDashboard>
                 <WhiteCardDashboard _MarginBottom="30px" _Padding="20px">
                     <S.HeaderCard>
