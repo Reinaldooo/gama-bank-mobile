@@ -30,7 +30,7 @@ export default function Welcome() {
     ) : (
         <SafeAreaProvider>
             <Navigation />
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
         </SafeAreaProvider>
     );
 }

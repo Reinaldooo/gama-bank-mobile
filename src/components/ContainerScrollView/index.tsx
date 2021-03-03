@@ -1,5 +1,6 @@
 import React from "react";
 import {ContainerScrollView} from "./style";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 interface ScrollViewProps {
     _bgColor?: string;
@@ -7,9 +8,11 @@ interface ScrollViewProps {
 
 const ContainerScroll: React.FC<ScrollViewProps> = ({children, _bgColor}) => {
     return (
-        <ContainerScrollView _bgColor={_bgColor}>
-            {children}
-        </ContainerScrollView>
+        <SafeAreaView style={{backgroundColor: "#a100ff"}}>
+            <ContainerScrollView _bgColor={_bgColor}>
+                {children}
+            </ContainerScrollView>
+        </SafeAreaView>
     );
 };
 
