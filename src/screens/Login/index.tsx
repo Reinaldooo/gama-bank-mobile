@@ -25,6 +25,7 @@ interface ILoginForm {
 export default function Login() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     const formRef = useRef<FormHandles>(null);
 
     async function loginSysGama(data: ILoginForm) {
@@ -40,6 +41,8 @@ export default function Login() {
             });
 
             await schema.validate(data, { abortEarly: false });
+
+            setLoading(true);
 
             const postData = {
                 usuario: login,
@@ -73,6 +76,7 @@ export default function Login() {
                 );
             });
         } catch (err) {
+            setLoading(false);
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 // This is the way to set errors with unform. Each key is the input name and
@@ -125,6 +129,7 @@ export default function Login() {
                             bgColor="#63dc3f"
                             color="#fff"
                             onPress={submitFormButton}
+                            _loading={loading}
                         />
                         <LinksBottom onPress={navForgetPassword}>
                             Esqueci minha senha{' '}

@@ -46,7 +46,6 @@ export default function ForgotPasswd() {
                                 navigation.navigate('RedefinePassword')
                             }
                         />
-                        {/*<LinksBottom onPress={navRedefinePassword}>Continuar <Feather name="chevron-right" size={13} color="#8C52E5" /></LinksBottom>*/}
                         <LinksBottom onPress={navLogin}>
                             Ir para Login{' '}
                             <Feather

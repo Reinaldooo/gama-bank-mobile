@@ -1,5 +1,5 @@
-import React from "react";
-import {ContainerCard, TitleCard} from "./styles";
+import React from 'react';
+import { ContainerCard, TitleCard } from './styles';
 
 interface WhiteCardGenericLoginRegisterProps {
     title?: string;
@@ -9,8 +9,8 @@ interface WhiteCardGenericLoginRegisterProps {
 const WhiteCardLoginRegister: React.FC<WhiteCardGenericLoginRegisterProps> = ({
     title,
     pdHorizontal,
-    children
-    }) => {
+    children,
+}) => {
     return (
         <ContainerCard pdHorizontal={pdHorizontal}>
             {title ? <TitleCard>{title}</TitleCard> : null}

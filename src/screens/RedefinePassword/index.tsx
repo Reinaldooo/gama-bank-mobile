@@ -20,6 +20,7 @@ export default function RedefinePassword() {
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister title="Redefinir senha">
+                    <InputLoginRegister placeholder="Nome do Usuário" />
                     <InputLoginRegister _mTop="60px" placeholder="Nova Senha" />
                     <InputLoginRegister
                         _mTop="60px"

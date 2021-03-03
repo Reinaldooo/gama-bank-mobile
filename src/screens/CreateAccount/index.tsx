@@ -22,6 +22,7 @@ interface FormFields {
 }
 
 export default function CreateAccount() {
+    const [loading, setLoading] = useState(false);
     const formRef = useRef<FormHandles>(null);
     const navigation = useNavigation();
 
@@ -54,16 +55,18 @@ export default function CreateAccount() {
 
             await schema.validate(data, { abortEarly: false });
 
-            const formData = {
-                cpf,
-                login: name,
-                nome: fullName,
-                senha: passwd,
-            };
-            await api.post('/usuarios', formData);
+            setLoading(true);
+
+            // const formData = {
+            //     cpf,
+            //     login: name,
+            //     nome: fullName,
+            //     senha: passwd,
+            // };
+            // await api.post('/usuarios', formData);
             navAccountCreated();
         } catch (err) {
-            console.log(err.message);
+            setLoading(false);
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 // This is the way to set errors with unform. Each key is the input name and
@@ -125,6 +128,7 @@ export default function CreateAccount() {
                             bgColor="#63dc3f"
                             color="#fff"
                             onPress={submitFormButton}
+                            _loading={loading}
                         />
                         <LinksBottom onPress={navLogin}>
                             <Feather

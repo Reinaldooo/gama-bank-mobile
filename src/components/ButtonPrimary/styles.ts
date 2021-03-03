@@ -16,6 +16,7 @@ export const ContainerButton = styled(RectButton)<ButtonProps>`
     width: ${(props) => (props._width ? props._width : '100%')};
     border-radius: 15px;
     background-color: ${(props) => props._bgColor || '#63dc3f'};
+    margin: 0 auto;
     margin-top: ${(props) => props._mTop || '20px'};
     margin-bottom: ${(props) => props._mBottom || '0'};
     padding: ${(props) => props._padding || '10px 20px'};
