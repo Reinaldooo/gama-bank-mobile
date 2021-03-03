@@ -6,7 +6,6 @@ import DrawerNavigator from './drawer';
 
 export type AuthRoutesParamList = {
     DashboardTabNavigator: undefined;
-    DrawerNavigator: undefined;
 };
 
 const { Navigator, Screen } = createStackNavigator<AuthRoutesParamList>();
@@ -18,7 +17,6 @@ export default function AuthRoutes() {
                 name="DashboardTabNavigator"
                 component={DashboardTabNavigator}
             />
-            <Screen name="DrawerNavigator" component={DrawerNavigator} />
         </Navigator>
     );
 }

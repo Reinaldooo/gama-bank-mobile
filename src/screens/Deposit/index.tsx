@@ -30,6 +30,7 @@ export default function Deposit() {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [date, setDate] = useState('');
     const [missingDate, setMissingDate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { debitAccount, transactionTypes } = useSelector(
         (state: IRootState) => state.accounts
@@ -52,7 +53,8 @@ export default function Deposit() {
     };
 
     const navDashboard = () => {
-        navigation.navigate('DashboardTabNavigator');
+        setLoading(false);
+        navigation.navigate('Home');
     };
 
     const submitFormButton = () => {
@@ -78,6 +80,8 @@ export default function Deposit() {
                 return;
             }
 
+            setLoading(true);
+
             const planoConta = transactionTypes!['R'][0];
 
             const postData = {
@@ -102,7 +106,9 @@ export default function Deposit() {
                     planoConta,
                 })
             );
+            navDashboard();
         } catch (err) {
+            setLoading(false);
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 formRef.current?.setErrors(errors);
@@ -185,6 +191,7 @@ export default function Deposit() {
                             marginBottom="30px"
                             bgColor="#63dc3f"
                             color="#fff"
+                            _loading={loading}
                         />
                     </S.DepositForm>
                 </WhiteCardDashboard>
