@@ -23,7 +23,6 @@ interface InputValueRef {
 interface InputRef {
     focus(): void;
 }
-
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     { name, icon, keyboardType, ...rest },
     ref
