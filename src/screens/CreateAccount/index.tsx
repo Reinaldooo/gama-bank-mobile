@@ -12,6 +12,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import { FormHandles } from '@unform/core';
 import ContainerLogoGama from '../../components/LogoGama';
+import { TextInput } from 'react-native';
 
 interface FormFields {
     cpf?: string;
@@ -24,6 +25,11 @@ interface FormFields {
 export default function CreateAccount() {
     const [loading, setLoading] = useState(false);
     const formRef = useRef<FormHandles>(null);
+    const loginInputRef = useRef<TextInput>(null);
+    const fullNameInputRef = useRef<TextInput>(null);
+    const passwordInputRef = useRef<TextInput>(null);
+    const confirmPasswordInputRef = useRef<TextInput>(null);
+
     const navigation = useNavigation();
 
     const submitFormButton = () => {
@@ -57,13 +63,13 @@ export default function CreateAccount() {
 
             setLoading(true);
 
-            // const formData = {
-            //     cpf,
-            //     login: name,
-            //     nome: fullName,
-            //     senha: passwd,
-            // };
-            // await api.post('/usuarios', formData);
+            const formData = {
+                cpf,
+                login: name,
+                nome: fullName,
+                senha: passwd,
+            };
+            await api.post('/usuarios', formData);
             navAccountCreated();
         } catch (err) {
             setLoading(false);
@@ -91,32 +97,58 @@ export default function CreateAccount() {
                             placeholder="Digite seu CPF"
                             autoCapitalize="none"
                             autoCorrect={false}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                loginInputRef.current?.focus();
+                            }}
                         />
                         <Input
+                            ref={loginInputRef}
                             name="name"
                             placeholder="Escolha um nome de usuário"
                             autoCapitalize="none"
                             autoCorrect={false}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                fullNameInputRef.current?.focus();
+                            }}
                         />
                         <Input
+                            ref={fullNameInputRef}
                             name="fullName"
                             placeholder="Nome completo"
                             autoCapitalize="none"
                             autoCorrect={false}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                passwordInputRef.current?.focus();
+                            }}
                         />
                         <Input
+                            ref={passwordInputRef}
                             name="passwd"
                             placeholder="Digite sua Senha"
                             autoCapitalize="none"
                             autoCorrect={false}
                             secureTextEntry
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                confirmPasswordInputRef.current?.focus();
+                            }}
                         />
                         <Input
+                            ref={confirmPasswordInputRef}
                             name="confirmPasswd"
                             placeholder="Confirme a sua Senha"
                             autoCapitalize="none"
                             autoCorrect={false}
                             secureTextEntry
+                            returnKeyType="send"
+                            onSubmitEditing={submitFormButton}
                         />
                         <ButtonPrimary
                             title="Continuar"

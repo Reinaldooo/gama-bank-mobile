@@ -41,7 +41,13 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     // Correcting link above because RefForwardComponent is deprecated:
     // https://stackoverflow.com/questions/58991706/typescript-refforwardingcomponent-not-working
 
-    const { registerField, defaultValue, fieldName, error } = useField(name);
+    const {
+        registerField,
+        defaultValue,
+        fieldName,
+        error,
+        clearError,
+    } = useField(name);
     const inputElRef = useRef<any>(null);
     const inputValueRef = useRef<InputValueRef>({ value: defaultValue });
     const [isFocused, setFocused] = useState(false);
@@ -61,6 +67,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     }));
 
     const handleFocus = () => {
+        clearError();
         setFocused(true);
     };
 
