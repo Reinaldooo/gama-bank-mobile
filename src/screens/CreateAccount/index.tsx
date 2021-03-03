@@ -78,7 +78,6 @@ export default function CreateAccount() {
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
                 <WhiteCardLoginRegister
-                    subtitle=""
                     title="Peça sua conta e cartão de crédito do Gama Bank"
                     pdHorizontal="40px"
                 >

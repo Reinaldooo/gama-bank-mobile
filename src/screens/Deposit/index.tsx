@@ -23,6 +23,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Button, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { number } from 'yup/lib/locale';
 
 interface IDepositForm {
     data: string;
@@ -90,13 +91,14 @@ export default function Deposit() {
                 planoConta: transactionTypes!['R'][0],
             };
 
-            console.log(postData);
-
             await api.post(`lancamentos`, postData).then((response) => {
                 if (response.status === 200) {
+                    console.log(postData);
+
                     nav();
                 } else {
                     console.log('deu erro');
+                    console.log(postData);
                 }
             });
 
@@ -118,6 +120,7 @@ export default function Deposit() {
     }
     const submitFormButton = () => {
         formRef.current?.submitForm();
+        console.log('postData');
     };
 
     return (
@@ -147,6 +150,7 @@ export default function Deposit() {
                         <Input
                             name="valor"
                             placeholder="Valor de depósito"
+                            keyboardType={number}
                             autoCapitalize="none"
                             autoCorrect={false}
                         />

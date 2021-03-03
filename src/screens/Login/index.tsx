@@ -96,10 +96,7 @@ export default function Login() {
         <ContainerScroll>
             <ContainerLogoGama mTop="50px" mBottom="20px" />
             <ContainerViewLoginRegister>
-                <WhiteCardLoginRegister
-                    subtitle=""
-                    title="Seja bem vindo, informe seus dados para logar."
-                >
+                <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
                     <LoginForm ref={formRef} onSubmit={loginSysGama}>
                         <Input
                             name="login"
