@@ -93,7 +93,7 @@ export default function Transfers() {
 
             setLoading(true);
 
-            const planoConta = transactionTypes!['TU'][0];
+            const planoConta = transactionTypes!['TC'][0];
 
             const postData = {
                 conta: debitAccount!.id,
