@@ -74,8 +74,8 @@ export default function Transfers() {
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                destinatario: Yup.string().required('Campo obrigatório'),
-                descricao: Yup.string().required('Campo obrigatório'),
+                destinatario: Yup.string().required('Campo obrigatório').trim(),
+                descricao: Yup.string().required('Campo obrigatório').trim(),
                 valor: Yup.number()
                     .max(9999.99, 'Valor máximo de R$ 9.999,99')
                     .required('Campo obrigatório'),
@@ -93,11 +93,11 @@ export default function Transfers() {
 
             setLoading(true);
 
-            const planoConta = transactionTypes!['TC'][0];
+            const planoConta = transactionTypes!['TU'][0];
 
             const postData = {
                 conta: debitAccount!.id,
-                destinatario,
+                contaDestino: destinatario,
                 data: date,
                 descricao,
                 login: user!.login!,
