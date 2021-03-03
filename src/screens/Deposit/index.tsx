@@ -9,7 +9,10 @@ import { FormHandles } from '@unform/core';
 import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import ContainerViewDashboard from '../../components/ContainerDashboard';
 import { useDispatch, useSelector } from 'react-redux';
-import { IDashboardState } from '../../store/modules/accounts/types';
+import {
+    IDashboardState,
+    ILancamentoRedux,
+} from '../../store/modules/accounts/types';
 import { isAuth } from '../../services/auth';
 import { createFloat } from '../../utils/helpers';
 import api from '../../services/api';
@@ -17,7 +20,9 @@ import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Button, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 interface IDepositForm {
     data: string;
@@ -29,91 +34,94 @@ export default function Deposit() {
     const formRef = useRef<FormHandles>(null);
     const dispatch = useDispatch();
 
-    const [date, setDate] = useState<Date>(new Date());
-    const [show, setShow] = useState(false);
-    const [mode, setMode] = useState<'date' | 'time'>('date');
+    const navigation = useNavigation();
 
-    // const { debitAccount, transactionTypes } = useSelector(
-    //     (state: IDashboardState) => state
-    // );
-    // const { user } = useSelector((state: IRootState) => state.user);
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [date, setDate] = useState('');
 
-    // async function handleSubmit({ descricao, data, valor }: IDepositForm) {
-    //     try {
-    //         valor = createFloat(valor);
-    //         // Start by cleaning errors
-    //         formRef.current?.setErrors({});
+    const { debitAccount, transactionTypes } = useSelector(
+        (state: IRootState) => state.accounts
+    );
 
-    //         const schema = Yup.object({
-    //             data: Yup.string().required('Campo obrigatório'),
-    //             descricao: Yup.string().required('Campo obrigatório'),
-    //             valor: Yup.number()
-    //                 .max(9999.99, 'Valor máximo de R$ 9.999,99')
-    //                 .required('Campo obrigatório'),
-    //         });
+    const { user } = useSelector((state: IRootState) => state.user);
 
-    //         await schema.validate(
-    //             { descricao, data, valor },
-    //             { abortEarly: false }
-    //         );
-
-    //         const postData = {
-    //             conta: debitAccount!.id,
-    //             data,
-    //             descricao,
-    //             login: user?.login,
-    //             valor,
-    //             planoConta: transactionTypes!['R'],
-    //         };
-
-    //         await api.post(`lancamentos`, postData).then((response) => {
-    //             if (response.status === 200) {
-    //                 // history.push("/dashboard");
-    //             } else {
-    //                 console.log('deu erro');
-    //             }
-    //         });
-
-    // dispatch(
-    //     debitTransactionSuccess({
-    //         ...postData,
-    //         // This id is temporary, it will be replaced with the real one after a reload
-    //         // id: shortid(),
-    //         planoConta: transactionTypes!['R'],
-    //         valor: Number(valor),
-    //     })
-    // );
-
-    // history.push("/dashboard");
-    //     } catch (err) {
-    //         if (err instanceof Yup.ValidationError) {
-    //             const errors = getValidationErrors(err);
-    //             // This is the way to set errors with unform. Each key is the input name and
-    //             // it will be set on the 'error' variable coming from the useField hook in the Comp
-    //             formRef.current?.setErrors(errors);
-    //             return;
-    //         }
-    //     }
-    // }
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-    const showMode = (currentMode: any) => {
-        setShow(true);
-        setMode(currentMode);
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
     };
 
-    const onDate = (_: any, selectedDate: any) => {
-        setDate(selectedDate);
-        console.log(selectedDate);
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
     };
 
-    function handleSubmit() {}
+    const handleConfirm = (date: Date) => {
+        setDate(date.toISOString().substring(0, 10));
+        console.log(date);
+        hideDatePicker();
+    };
+
+    function nav() {
+        navigation.navigate('DashboardTabNavigator');
+    }
+
+    async function handleSubmit({ descricao, data, valor }: IDepositForm) {
+        try {
+            valor = createFloat(valor);
+            formRef.current?.setErrors({});
+
+            const schema = Yup.object({
+                data: Yup.string().required('Campo obrigatório'),
+                descricao: Yup.string().required('Campo obrigatório'),
+                valor: Yup.number()
+                    .max(9999.99, 'Valor máximo de R$ 9.999,99')
+                    .required('Campo obrigatório'),
+            });
+
+            await schema.validate(
+                { descricao, data, valor },
+                { abortEarly: false }
+            );
+
+            const postData = {
+                conta: debitAccount!.id,
+                data: date,
+                descricao,
+                login: user!.login!,
+                valor,
+                planoConta: transactionTypes!['R'][0],
+            };
+
+            console.log(postData);
+
+            await api.post(`lancamentos`, postData).then((response) => {
+                if (response.status === 200) {
+                    nav();
+                } else {
+                    console.log('deu erro');
+                }
+            });
+
+            dispatch(
+                debitTransactionSuccess({
+                    ...postData,
+                    id: '156552',
+                    valor: Number(valor),
+                })
+            );
+            nav();
+        } catch (err) {
+            if (err instanceof Yup.ValidationError) {
+                const errors = getValidationErrors(err);
+                formRef.current?.setErrors(errors);
+                return;
+            }
+        }
+    }
+    const submitFormButton = () => {
+        formRef.current?.submitForm();
+    };
 
     return (
         <ContainerScroll>
-            {console.log(date)}
             <ContainerViewDashboard>
                 <WhiteCardDashboard _MarginTop="30px">
                     <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
@@ -125,18 +133,17 @@ export default function Deposit() {
                             autoCorrect={false}
                         />
                         <Button
-                            onPress={showDatepicker}
+                            onPress={showDatePicker}
                             title="Show date picker!"
                         />
-                        {show && (
-                            <DateTimePicker
-                                testID="dateTimePicker"
-                                value={date!}
-                                mode={mode}
-                                onChange={onDate}
-                                display="default"
-                            />
-                        )}
+
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
+
                         <Input
                             name="valor"
                             placeholder="Valor de depósito"
@@ -149,6 +156,7 @@ export default function Deposit() {
                             iconName="arrow-right"
                             iconColor="#fff"
                             iconSize={25}
+                            onPress={submitFormButton}
                             marginTop="20px"
                             marginBottom="30px"
                             bgColor="#63dc3f"
