@@ -13,13 +13,14 @@ import Input from '../../components/Input';
 import { FormHandles } from '@unform/core';
 import ContainerLogoGama from '../../components/LogoGama';
 import { TextInput } from 'react-native';
+import InputMasked from '../../components/InputMasked';
 
 interface FormFields {
-    cpf?: string;
-    name?: string;
-    fullName?: string;
-    passwd?: string;
-    confirmPasswd?: string;
+    cpf: string;
+    name: string;
+    fullName: string;
+    passwd: string;
+    confirmPasswd: string;
 }
 
 export default function CreateAccount() {
@@ -49,7 +50,7 @@ export default function CreateAccount() {
         try {
             formRef.current?.setErrors({});
             const schema = Yup.object({
-                cpf: Yup.string().trim().required('Cpf obrigatório.'),
+                cpf: Yup.string().min(14).trim().required('Cpf obrigatório.'),
                 name: Yup.string().trim().required('Campo obrigatório'),
                 fullName: Yup.string().trim().required('Campo obrigatório'),
                 passwd: Yup.string().trim().required('Senha obrigatória'),
@@ -63,7 +64,7 @@ export default function CreateAccount() {
             setLoading(true);
 
             const formData = {
-                cpf,
+                cpf: cpf.replace(/\.|-/gm, ''), // Removing '.' and '-',
                 login: name,
                 nome: fullName,
                 senha: passwd,
@@ -91,11 +92,13 @@ export default function CreateAccount() {
                     pdHorizontal="40px"
                 >
                     <CreateAccountForm ref={formRef} onSubmit={handleSubmit}>
-                        <Input
+                        <InputMasked
+                            mask="CPF"
                             name="cpf"
                             placeholder="Digite seu CPF"
                             autoCapitalize="none"
                             autoCorrect={false}
+                            keyboardType="number-pad"
                             returnKeyType="next"
                             onSubmitEditing={() => {
                                 // Check out Input comp to details on this custom focus method

@@ -18,6 +18,7 @@ import api from '../../services/api';
 import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
+import InputMasked from '../../components/InputMasked';
 interface IDepositForm {
     descricao: string;
     valor: number | string;
@@ -64,6 +65,7 @@ export default function Deposit() {
     async function handleSubmit({ descricao, valor }: IDepositForm) {
         try {
             valor = valor && createFloat(valor);
+
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
@@ -148,7 +150,8 @@ export default function Deposit() {
                             autoCorrect={false}
                         />
 
-                        <Input
+                        <InputMasked
+                            mask="BRL"
                             name="valor"
                             placeholder="Valor de depósito"
                             autoCapitalize="none"
