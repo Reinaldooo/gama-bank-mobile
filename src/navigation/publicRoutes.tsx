@@ -5,12 +5,14 @@ import Login from '../screens/Login';
 import CreateAccount from '../screens/CreateAccount';
 import ForgotPasswd from '../screens/ForgotPasswd';
 import RedefinePassword from '../screens/RedefinePassword';
+import ConfirmAccountCreate from '../screens/ConfirmAccountCreate';
 
 export type PublicRoutesParamList = {
     Login: undefined;
     ForgotPasswd: undefined;
     CreateAccount: undefined;
     RedefinePassword: undefined;
+    ConfirmAccountCreate: undefined;
 };
 
 const { Navigator, Screen } = createStackNavigator<PublicRoutesParamList>();
@@ -22,6 +24,10 @@ export default function PublicRoutes() {
             <Screen name="ForgotPasswd" component={ForgotPasswd} />
             <Screen name="CreateAccount" component={CreateAccount} />
             <Screen name="RedefinePassword" component={RedefinePassword} />
+            <Screen
+                name="ConfirmAccountCreate"
+                component={ConfirmAccountCreate}
+            />
         </Navigator>
     );
 }

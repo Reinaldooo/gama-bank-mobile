@@ -25,6 +25,14 @@ export default function CreateAccount() {
     const formRef = useRef<FormHandles>(null);
     const navigation = useNavigation();
 
+    const submitFormButton = () => {
+        formRef.current?.submitForm();
+    };
+
+    function navAccountCreated() {
+        navigation.navigate('ConfirmAccountCreate');
+    }
+
     function navLogin() {
         navigation.navigate('Login');
     }
@@ -53,7 +61,7 @@ export default function CreateAccount() {
                 senha: passwd,
             };
             await api.post('/usuarios', formData);
-            navLogin();
+            navAccountCreated();
         } catch (err) {
             console.log(err.message);
             if (err instanceof Yup.ValidationError) {
@@ -64,13 +72,6 @@ export default function CreateAccount() {
                 return;
             }
         }
-    }
-    const submitFormButton = () => {
-        formRef.current?.submitForm();
-    };
-
-    function navAccountCreate() {
-        navigation.navigate('ConfirmAccountCreate');
     }
 
     return (

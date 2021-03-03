@@ -9,10 +9,11 @@ interface ButtonProps {
     _mTop?: string;
     _mBottom?: string;
     _loading?: boolean;
+    _width?: string;
 }
 
 export const ContainerButton = styled(RectButton)<ButtonProps>`
-    width: 100%;
+    width: ${(props) => (props._width ? props._width : '100%')};
     border-radius: 15px;
     background-color: ${(props) => props._bgColor || '#63dc3f'};
     margin-top: ${(props) => props._mTop || '20px'};
