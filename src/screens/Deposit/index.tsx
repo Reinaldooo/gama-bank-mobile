@@ -9,22 +9,15 @@ import { FormHandles } from '@unform/core';
 import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import ContainerViewDashboard from '../../components/ContainerDashboard';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    IDashboardState,
-    ILancamentoRedux,
-} from '../../store/modules/accounts/types';
-import { isAuth } from '../../services/auth';
+
 import { createFloat } from '../../utils/helpers';
 import api from '../../services/api';
 import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Button, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { number } from 'yup/lib/locale';
-
 interface IDepositForm {
     data: string;
     descricao: string;
@@ -90,6 +83,7 @@ export default function Deposit() {
                 valor,
                 planoConta: transactionTypes!['R'][0],
             };
+            console.log(postData);
 
             await api.post(`lancamentos`, postData).then((response) => {
                 if (response.status === 200) {
@@ -120,31 +114,38 @@ export default function Deposit() {
     }
     const submitFormButton = () => {
         formRef.current?.submitForm();
-        console.log('postData');
     };
 
     return (
-        <ContainerScroll>
+        <ContainerScroll _bgColor="#e6e6e6">
+            <S.HeaderDashboard>
+                <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
+                <S.ContainerIcon>
+                    <S.IconEye>
+                        <S.ImgIconEye
+                            source={require('../../assets/close-drawer.png')}
+                        />
+                    </S.IconEye>
+                </S.ContainerIcon>
+            </S.HeaderDashboard>
+
             <ContainerViewDashboard>
-                <WhiteCardDashboard _MarginTop="30px">
-                    <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
+                <WhiteCardDashboard
+                    _MarginBottom="120px"
+                    _Padding="20px 20px 40px"
+                >
+                    <S.HeaderCard>
+                        <S.IconHeaderCard
+                            source={require('../../assets/icon-money.png')}
+                        />
+                        <S.TextHeaderCard>Depositos</S.TextHeaderCard>
+                    </S.HeaderCard>
                     <S.DepositForm ref={formRef} onSubmit={handleSubmit}>
                         <Input
                             name="Descrição"
                             placeholder="Descrição"
                             autoCapitalize="none"
                             autoCorrect={false}
-                        />
-                        <Button
-                            onPress={showDatePicker}
-                            title="Show date picker!"
-                        />
-
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            onConfirm={handleConfirm}
-                            onCancel={hideDatePicker}
                         />
 
                         <Input
@@ -153,6 +154,25 @@ export default function Deposit() {
                             keyboardType={number}
                             autoCapitalize="none"
                             autoCorrect={false}
+                        />
+
+                        <ButtonPrimary
+                            onPress={showDatePicker}
+                            title="Selecione uma data"
+                            iconName="calendar"
+                            iconColor="#fff"
+                            iconSize={25}
+                            marginTop="20px"
+                            marginBottom="30px"
+                            bgColor="#0c5ef5"
+                            color="#fff"
+                        />
+
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
                         />
 
                         <ButtonPrimary
