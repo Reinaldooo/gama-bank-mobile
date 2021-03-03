@@ -120,6 +120,7 @@ export default function Transfers() {
                     planoConta,
                 })
             );
+            formRef.current?.setFieldValue(descricao, '');
             navDashboard();
         } catch (err) {
             setLoading(false);
@@ -134,7 +135,9 @@ export default function Transfers() {
     return (
         <ContainerScroll _bgColor="#e6e6e6">
             <S.HeaderDashboard>
-                <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
+                <S.TextHeaderDashboard>
+                    Olá, {user?.userName}
+                </S.TextHeaderDashboard>
                 <S.ContainerIcon>
                     <S.CloseButton onPress={() => navigation.goBack()}>
                         <Image
