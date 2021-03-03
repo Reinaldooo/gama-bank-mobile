@@ -11,7 +11,7 @@ export type PublicRoutesParamList = {
     Login: undefined;
     ForgotPasswd: undefined;
     CreateAccount: undefined;
-    RedefinePassword: undefined;
+    RedefinePassword: { senhaTemporaria: string; login: string };
     ConfirmAccountCreate: undefined;
 };
 

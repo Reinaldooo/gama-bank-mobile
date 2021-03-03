@@ -16,6 +16,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import { logInUser } from '../../store/modules/user/actions';
 import ContainerLogoGama from '../../components/LogoGama';
+import { TextInput } from 'react-native';
 
 interface ILoginForm {
     login: string;
@@ -27,6 +28,7 @@ export default function Login() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const formRef = useRef<FormHandles>(null);
+    const passwordInputRef = useRef<TextInput>(null);
 
     async function loginSysGama(data: ILoginForm) {
         const { login, passwd } = data;
@@ -36,8 +38,8 @@ export default function Login() {
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                login: Yup.string().min(5).required('Cpf obrigatório.'),
-                passwd: Yup.string().required('Campo obrigatório'),
+                login: Yup.string().trim().min(5).required('Cpf obrigatório.'),
+                passwd: Yup.string().trim().required('Campo obrigatório'),
             });
 
             await schema.validate(data, { abortEarly: false });
@@ -111,13 +113,21 @@ export default function Login() {
                             placeholder="Digite seu usuário"
                             autoCapitalize="none"
                             autoCorrect={false}
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                // Check out Input comp to details on this custom focus method
+                                passwordInputRef.current?.focus();
+                            }}
                         />
                         <Input
+                            ref={passwordInputRef}
                             name="passwd"
                             placeholder="Digite sua Senha"
                             autoCapitalize="none"
                             autoCorrect={false}
                             secureTextEntry
+                            returnKeyType="send"
+                            onSubmitEditing={submitFormButton}
                         />
                         <ButtonPrimary
                             title="Continuar"
