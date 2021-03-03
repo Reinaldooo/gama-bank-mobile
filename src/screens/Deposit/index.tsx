@@ -18,6 +18,7 @@ import api from '../../services/api';
 import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
+import InputMasked from '../../components/InputMasked';
 interface IDepositForm {
     descricao: string;
     valor: number | string;
@@ -65,10 +66,11 @@ export default function Deposit() {
     async function handleSubmit({ descricao, valor }: IDepositForm) {
         try {
             valor = valor && createFloat(valor);
+
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                descricao: Yup.string().required('Campo obrigatório'),
+                descricao: Yup.string().trim().required('Campo obrigatório'),
                 valor: Yup.number()
                     .max(9999.99, 'Valor máximo de R$ 9.999,99')
                     .required('Campo obrigatório'),
@@ -154,7 +156,8 @@ export default function Deposit() {
                             }}
                         />
 
-                        <Input
+                        <InputMasked
+                            mask="BRL"
                             name="valor"
                             placeholder="Valor de depósito"
                             autoCapitalize="none"

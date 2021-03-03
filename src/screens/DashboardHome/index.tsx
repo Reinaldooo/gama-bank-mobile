@@ -11,6 +11,7 @@ import { IRootState } from '../../store';
 import { logOutUser } from '../../store/modules/user/actions';
 import {
     accountDataSuccess,
+    toggleTransactionVisibility,
     transactionTypesSuccess,
 } from '../../store/modules/accounts/actions';
 import ContainerScroll from '../../components/ContainerScrollView';
@@ -19,6 +20,9 @@ import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import TextBalance from '../../components/TextBalance';
 import TextHistoricBalance from '../../components/TextHistoricBalance';
 import MoneyLoader from '../../components/MoneyLoader';
+import TransactionItem from '../../components/TransactionItem';
+import HidableValue from '../../components/HidableValue';
+import FormattedBRL from '../../components/FormattedBRL';
 
 type DashboardHomeNavigationProp = DrawerNavigationProp<
     DrawerParamList,
@@ -32,7 +36,9 @@ type Props = {
 const DashboardHome: React.FC<Props> = ({ navigation }) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.user);
-    const { loading } = useSelector((state: IRootState) => state.accounts);
+    const { loading, debitAccount, transactions, hideInfo } = useSelector(
+        (state: IRootState) => state.accounts
+    );
 
     async function removeAuthData() {
         await AsyncStorage.multiRemove([
@@ -87,13 +93,42 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
         getApiInfo();
     }, [dispatch]);
 
+    // Ideally this info should be received from the backend to avoid making
+    // the calculations on the client. We had to code it this way because
+    // if there is no data in the store all the calculations below would break
+    let debitBalance;
+    let debitTransactions;
+    let debitTransactionsSum;
+    let income;
+    let outcome;
+    let incomeSum;
+    let outcomeSum;
+
+    if (!loading) {
+        debitBalance = debitAccount!.saldo;
+        debitTransactions = transactions?.filter((tr) => !tr.isCredit);
+        debitTransactionsSum = debitTransactions!.reduce(
+            (acc, item) => acc + item.valor,
+            0
+        );
+
+        income = transactions?.filter((tr) => tr.valor > 0);
+        outcome = transactions?.filter((tr) => tr.valor < 0);
+        incomeSum = income!.reduce((acc, item) => acc + item.valor, 0);
+        outcomeSum = outcome!.reduce((acc, item) => acc + item.valor, 0);
+    }
+
+    const toggleHideInfo = () => dispatch(toggleTransactionVisibility());
+
     return (
         <ContainerScroll>
             <ContainerViewDashboard>
                 <S.HeaderDashboard>
-                    <S.TextHeaderDashboard>Olá, Usuário</S.TextHeaderDashboard>
+                    <S.TextHeaderDashboard>
+                        Olá, {user?.userName}
+                    </S.TextHeaderDashboard>
                     <S.ContainerIcon>
-                        <S.IconEye>
+                        <S.IconEye onPress={toggleHideInfo}>
                             <S.ImgIconEye
                                 source={require('../../assets/icon-eye.png')}
                             />
@@ -125,9 +160,25 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                 </S.TextHeaderCard>
                             </S.HeaderCard>
                             <S.ContentCard>
-                                <TextBalance>R$: 1.890,00</TextBalance>
+                                <TextBalance>
+                                    <HidableValue
+                                        condition={hideInfo}
+                                        value={
+                                            <FormattedBRL
+                                                value={debitBalance}
+                                            />
+                                        }
+                                    />
+                                </TextBalance>
                                 <TextHistoricBalance>
-                                    Lançamentos de débito: R$ 22,50
+                                    {!hideInfo && (
+                                        <>
+                                            Lançamentos no mês:{' '}
+                                            <FormattedBRL
+                                                value={debitTransactionsSum}
+                                            />
+                                        </>
+                                    )}
                                 </TextHistoricBalance>
                             </S.ContentCard>
                         </WhiteCardDashboard>
@@ -143,20 +194,33 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                     Planos de conta
                                 </S.TextHeaderCard>
                             </S.HeaderCard>
-                            <S.PlanAccountContentCard>
-                                <TextBalance>R$: 1.890,00</TextBalance>
-                                <TextHistoricBalance>
-                                    Tipo do plano: Receita
-                                </TextHistoricBalance>
-                            </S.PlanAccountContentCard>
-                            <S.PlanAccountCard>
-                                <S.TextExpense>
-                                    Tipo do plano: Despesas
-                                </S.TextExpense>
-                                <TextBalance _Color="#F45F5F">
-                                    - R$: 1.890,00
-                                </TextBalance>
-                            </S.PlanAccountCard>
+                            <HidableValue
+                                condition={hideInfo}
+                                value={
+                                    <>
+                                        <S.PlanAccountContentCard>
+                                            <TextHistoricBalance>
+                                                Tipo do plano: Entradas
+                                            </TextHistoricBalance>
+                                            <TextBalance>
+                                                <FormattedBRL
+                                                    value={incomeSum}
+                                                />
+                                            </TextBalance>
+                                        </S.PlanAccountContentCard>
+                                        <S.PlanAccountCard>
+                                            <S.TextExpense>
+                                                Tipo do plano: Saídas
+                                            </S.TextExpense>
+                                            <TextBalance _Color="#F45F5F">
+                                                <FormattedBRL
+                                                    value={outcomeSum}
+                                                />
+                                            </TextBalance>
+                                        </S.PlanAccountCard>
+                                    </>
+                                }
+                            />
                         </WhiteCardDashboard>
                         <WhiteCardDashboard
                             _MarginBottom="120px"
@@ -170,61 +234,26 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                     Últimos Lançamentos
                                 </S.TextHeaderCard>
                             </S.HeaderCard>
-                            <S.RowLastHistoric>
-                                <S.LineRowSeparatorHistoric>
-                                    |
-                                </S.LineRowSeparatorHistoric>
-                                <TextBalance _Color="#F45F5F" _mTop="10px">
-                                    - R$: 1.890,00
-                                </TextBalance>
-                                <S.TextDataHistoric>
-                                    11 de Fev.
-                                </S.TextDataHistoric>
-                            </S.RowLastHistoric>
-                            <S.RowLastHistoric>
-                                <S.LineRowSeparatorHistoric>
-                                    |
-                                </S.LineRowSeparatorHistoric>
-                                <TextBalance _Color="#F45F5F" _mTop="10px">
-                                    - R$: 1.890,00
-                                </TextBalance>
-                                <S.TextDataHistoric>
-                                    11 de Fev.
-                                </S.TextDataHistoric>
-                            </S.RowLastHistoric>
-                            <S.RowLastHistoric>
-                                <S.LineRowSeparatorHistoric>
-                                    |
-                                </S.LineRowSeparatorHistoric>
-                                <TextBalance _mTop="10px">
-                                    R$: 1.890,00
-                                </TextBalance>
-                                <S.TextDataHistoric>
-                                    11 de Fev.
-                                </S.TextDataHistoric>
-                            </S.RowLastHistoric>
-                            <S.RowLastHistoric>
-                                <S.LineRowSeparatorHistoric>
-                                    |
-                                </S.LineRowSeparatorHistoric>
-                                <TextBalance _Color="#F45F5F" _mTop="10px">
-                                    - R$: 1.890,00
-                                </TextBalance>
-                                <S.TextDataHistoric>
-                                    11 de Fev.
-                                </S.TextDataHistoric>
-                            </S.RowLastHistoric>
-                            <S.RowLastHistoric>
-                                <S.LineRowSeparatorHistoric>
-                                    |
-                                </S.LineRowSeparatorHistoric>
-                                <TextBalance _mTop="10px">
-                                    - R$: 1.890,00
-                                </TextBalance>
-                                <S.TextDataHistoric>
-                                    11 de Fev.
-                                </S.TextDataHistoric>
-                            </S.RowLastHistoric>
+
+                            {hideInfo ? (
+                                <HidableValue condition={hideInfo} />
+                            ) : (
+                                <>
+                                    {transactions && transactions![0] ? (
+                                        transactions!.map((tr) => (
+                                            <TransactionItem
+                                                key={tr.id}
+                                                valor={tr.valor}
+                                                data={tr.data}
+                                            />
+                                        ))
+                                    ) : (
+                                        <S.TextHeaderCard>
+                                            Não existem lançamentos.
+                                        </S.TextHeaderCard>
+                                    )}
+                                </>
+                            )}
                         </WhiteCardDashboard>
                     </>
                 )}

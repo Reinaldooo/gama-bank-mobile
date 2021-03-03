@@ -1,4 +1,4 @@
-import { getDateInfo } from "../../../../utils/helpers";
+import { getDateInfo } from '../../../../utils/helpers';
 import {
     IConta,
     ILancamento,
@@ -14,7 +14,7 @@ import {
     TOGGLE_TRANSACTION_VISIBILITY,
     SET_ACTIVE_MONTH,
     ADD_TRANSACTION_TYPE,
-} from "../types";
+} from '../types';
 
 function calculaSaldo(
     lancamento: ILancamentoRedux,
@@ -22,13 +22,13 @@ function calculaSaldo(
     isDebit?: boolean
 ): number {
     switch (lancamento.planoConta.tipoMovimento) {
-        case "R":
+        case 'R':
             // Deposit my account
             return saldo + lancamento.valor;
-        case "TU":
+        case 'TU':
             // Transfer to other user
             return saldo - lancamento.valor;
-        case "TC":
+        case 'TC':
             // Transfer from my bank to credit
             if (isDebit) {
                 // As this function will be called in both accounts, on the 'bank' it
@@ -44,8 +44,8 @@ function calculaSaldo(
 function checkDebitNegativeValue(lancamento: ILancamentoRedux): number {
     // Is this two cases the money is leaving the account, so it should be negative
     const isNegative =
-        lancamento.planoConta.tipoMovimento === "TC" ||
-        lancamento.planoConta.tipoMovimento === "TU";
+        lancamento.planoConta.tipoMovimento === 'TC' ||
+        lancamento.planoConta.tipoMovimento === 'TU';
 
     if (isNegative) return lancamento.valor * -1;
     return lancamento.valor;
@@ -54,7 +54,7 @@ function checkDebitNegativeValue(lancamento: ILancamentoRedux): number {
 function checkCreditNegativeValue(lancamento: ILancamentoRedux): number {
     // The only case a credit transaction wold be negative is if the user
     // is tranfering money from credit to other user
-    const isNegative = lancamento.planoConta.tipoMovimento === "TU";
+    const isNegative = lancamento.planoConta.tipoMovimento === 'TU';
 
     if (isNegative) return lancamento.valor * -1;
     return lancamento.valor;
@@ -207,7 +207,7 @@ export default function reducer(
                           ...state.transactions!,
                           {
                               ...payload,
-                              id: payload.id + "c",
+                              id: payload.id + 'c',
                               conta: state.creditAccount!.id,
                               valor: checkCreditNegativeValue(payload),
                               tipo: payload.planoConta.tipoMovimento,

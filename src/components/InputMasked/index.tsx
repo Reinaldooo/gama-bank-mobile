@@ -9,10 +9,12 @@ import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
 //
 import * as S from './styles';
+import { brlMask, formatCPF } from '../../utils/helpers';
 
 interface InputProps extends TextInputProps {
     name: string;
     icon?: string;
+    mask: 'BRL' | 'CPF';
 }
 
 interface InputValueRef {
@@ -22,8 +24,8 @@ interface InputValueRef {
 interface InputRef {
     focus(): void;
 }
-const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-    { name, icon, ...rest },
+const InputMasked: React.ForwardRefRenderFunction<InputRef, InputProps> = (
+    { name, icon, mask, ...rest },
     ref
 ) => {
     // This is a very rare kind of component thats uses "useImperativeHandle"
@@ -51,6 +53,8 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     const inputElRef = useRef<any>(null);
     const inputValueRef = useRef<InputValueRef>({ value: defaultValue });
     const [isFocused, setFocused] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+    const isBRL = mask === 'BRL';
 
     useEffect(() => {
         registerField({
@@ -75,6 +79,24 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         setFocused(false);
     };
 
+    const handleChange = (value: string) => {
+        if (!isBRL) {
+            inputValueRef.current.value = formatCPF(value);
+            setInputValue(formatCPF(value));
+            return;
+        }
+
+        value = brlMask(value);
+
+        if (!value) {
+            inputValueRef.current.value = '';
+            setInputValue('');
+            return;
+        }
+        inputValueRef.current.value = 'R$ ' + value;
+        setInputValue('R$ ' + value);
+    };
+
     return (
         <S.Container isErrored={!!error}>
             <S.Icon
@@ -88,14 +110,14 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
                 placeholderTextColor="#999"
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                value={inputValue}
                 defaultValue={defaultValue}
-                onChangeText={(value) => {
-                    inputValueRef.current.value = value;
-                }}
+                onChangeText={(value) => handleChange(value)}
                 {...rest}
             />
+            {isBRL && <S.MaxValue>Max: R$ 9.999,99</S.MaxValue>}
         </S.Container>
     );
 };
 
-export default forwardRef(Input);
+export default forwardRef(InputMasked);
