@@ -167,7 +167,7 @@ XXX       | XXXX     |
 <br/><br/>
 
 
-## Work Strategy
+## Our journey
 
 <p align="center">
 
