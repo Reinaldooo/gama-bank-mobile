@@ -16,7 +16,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import { logInUser } from '../../store/modules/user/actions';
 import ContainerLogoGama from '../../components/LogoGama';
-import { TextInput } from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 
 interface ILoginForm {
     login: string;
@@ -60,20 +60,23 @@ export default function Login() {
                     '@tokenApp',
                     '@loginApp',
                     '@userNameApp',
+                    '@cpfApp',
                 ]);
                 const token = ['@tokenApp', data.token];
                 const login = ['@loginApp', data.usuario.login];
+                const cpf = ['@cpfApp', data.usuario.cpf];
                 const userName = [
                     '@userNameApp',
                     data.usuario.nome.split(' ')[0],
                 ];
-                await AsyncStorage.multiSet([token, login, userName]);
+                await AsyncStorage.multiSet([token, login, userName, cpf]);
                 api.defaults.headers.Authorization = data.token;
                 dispatch(
                     logInUser({
                         token: token[1],
                         userName: userName[1],
                         login: login[1],
+                        cpf: cpf[1],
                     })
                 );
             });
@@ -103,63 +106,74 @@ export default function Login() {
     };
 
     return (
-        <ContainerScroll>
-            <ContainerLogoGama mTop="50px" mBottom="20px" />
-            <ContainerViewLoginRegister>
-                <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
-                    <LoginForm ref={formRef} onSubmit={loginSysGama}>
-                        <Input
-                            name="login"
-                            placeholder="Digite seu usuário"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            returnKeyType="next"
-                            onSubmitEditing={() => {
-                                // Check out Input comp to details on this custom focus method
-                                passwordInputRef.current?.focus();
-                            }}
-                        />
-                        <Input
-                            ref={passwordInputRef}
-                            name="passwd"
-                            placeholder="Digite sua Senha"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            secureTextEntry
-                            returnKeyType="send"
-                            onSubmitEditing={submitFormButton}
-                        />
-                        <ButtonPrimary
-                            title="Continuar"
-                            iconName="arrow-right"
-                            iconColor="#fff"
-                            iconSize={25}
-                            marginTop="20px"
-                            marginBottom="30px"
-                            bgColor="#63dc3f"
-                            color="#fff"
-                            onPress={submitFormButton}
-                            _loading={loading}
-                        />
-                        <LinksBottom onPress={navForgetPassword}>
-                            Esqueci minha senha{' '}
-                            <Feather
-                                name="chevron-right"
-                                size={13}
-                                color="#8C52E5"
+        <KeyboardAvoidingView
+            style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            enabled
+            keyboardVerticalOffset={10}
+        >
+            <ContainerScroll>
+                <ContainerLogoGama mTop="50px" mBottom="20px" />
+                <ContainerViewLoginRegister>
+                    <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
+                        <LoginForm ref={formRef} onSubmit={loginSysGama}>
+                            <Input
+                                name="login"
+                                placeholder="Digite seu usuário"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                returnKeyType="next"
+                                onSubmitEditing={() => {
+                                    // Check out Input comp to details on this custom focus method
+                                    passwordInputRef.current?.focus();
+                                }}
                             />
-                        </LinksBottom>
-                        <LinksBottom onPress={navCreateAccount}>
-                            Ainda não sou cliente{' '}
-                            <Feather
-                                name="chevron-right"
-                                size={13}
-                                color="#8C52E5"
+                            <Input
+                                ref={passwordInputRef}
+                                name="passwd"
+                                placeholder="Digite sua Senha"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                secureTextEntry
+                                returnKeyType="send"
+                                onSubmitEditing={submitFormButton}
                             />
-                        </LinksBottom>
-                    </LoginForm>
-                </WhiteCardLoginRegister>
-            </ContainerViewLoginRegister>
-        </ContainerScroll>
+                            <ButtonPrimary
+                                title="Continuar"
+                                iconName="arrow-right"
+                                iconColor="#fff"
+                                iconSize={25}
+                                marginTop="20px"
+                                marginBottom="30px"
+                                bgColor="#63dc3f"
+                                color="#fff"
+                                onPress={submitFormButton}
+                                _loading={loading}
+                            />
+                            <LinksBottom onPress={navForgetPassword}>
+                                Esqueci minha senha{' '}
+                                <Feather
+                                    name="chevron-right"
+                                    size={13}
+                                    color="#8C52E5"
+                                />
+                            </LinksBottom>
+                            <LinksBottom onPress={navCreateAccount}>
+                                Ainda não sou cliente{' '}
+                                <Feather
+                                    name="chevron-right"
+                                    size={13}
+                                    color="#8C52E5"
+                                />
+                            </LinksBottom>
+                        </LoginForm>
+                    </WhiteCardLoginRegister>
+                </ContainerViewLoginRegister>
+            </ContainerScroll>
+        </KeyboardAvoidingView>
     );
 }

@@ -6,6 +6,7 @@ import Deposit from '../screens/Deposit';
 import Plans from '../screens/Plans';
 import DrawerNavigator from './drawer';
 import { Image, Platform } from 'react-native';
+import { Ionicons, FontAwesome, MaterialCommunityIcons  } from '@expo/vector-icons';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -21,28 +22,16 @@ export default function DashboardTabNavigator() {
 
                     const routes: Routes = {
                         Home: (
-                            <Image
-                                source={require('../assets/icon-lancamentos.png')}
-                                style={{ maxWidth: 41 }}
-                            />
+                            <Ionicons name="home-outline" size={33} color="#ffffff" />
                         ),
                         Transfers: (
-                            <Image
-                                source={require('../assets/icon-transferir.png')}
-                                style={{ maxWidth: 31 }}
-                            />
+                            <FontAwesome name="exchange" size={33} color="#ffffff" />
                         ),
                         Deposit: (
-                            <Image
-                                source={require('../assets/icon-depositar.png')}
-                                style={{ maxWidth: 37 }}
-                            />
+                            <FontAwesome name="money" size={33} color="#ffffff" />
                         ),
                         Plans: (
-                            <Image
-                                source={require('../assets/icon-planos.png')}
-                                style={{ maxWidth: 29 }}
-                            />
+                            <MaterialCommunityIcons name="currency-usd-circle-outline" size={40} color="#ffffff" />
                         ),
                     };
                     return routes[route.name];
@@ -78,10 +67,10 @@ export default function DashboardTabNavigator() {
                 },
             }}
         >
-            <Screen name="Home" component={DrawerNavigator} />
-            <Screen name="Transfers" component={Transfers} />
-            <Screen name="Deposit" component={Deposit} />
-            <Screen name="Plans" component={Plans} />
+            <Screen name="Home" component={DrawerNavigator} options={{title: 'Início'}} />
+            <Screen name="Transfers" component={Transfers} options={{title: 'Transferências'}} />
+            <Screen name="Deposit" component={Deposit} options={{title: 'Depósitos'}} />
+            <Screen name="Plans" component={Plans} options={{title: 'Planos'}} />
         </Navigator>
     );
 }

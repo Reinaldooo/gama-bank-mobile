@@ -8,6 +8,7 @@ import {
     ImageUser,
     ImageClose,
 } from './styles';
+import { Ionicons } from '@expo/vector-icons';
 import { DrawerProps } from '../DrawerInfoUser';
 
 const DrawerContentView: React.FC<DrawerProps> = ({ navigation, children }) => {
@@ -15,14 +16,10 @@ const DrawerContentView: React.FC<DrawerProps> = ({ navigation, children }) => {
         <DrawerContent>
             <HeaderDrawer>
                 <ButtonUserHeader>
-                    <ImageUser
-                        source={require('../../assets/user-drawer.png')}
-                    />
+                    <Ionicons name="md-person-outline" size={33} color="#8C52E5" />
                 </ButtonUserHeader>
                 <ButtonCloseHeader onPress={() => navigation.closeDrawer()}>
-                    <ImageClose
-                        source={require('../../assets/close-drawer.png')}
-                    />
+                    <Ionicons name="md-close-sharp" size={33} color="#8C52E5" />
                 </ButtonCloseHeader>
             </HeaderDrawer>
             {children}
