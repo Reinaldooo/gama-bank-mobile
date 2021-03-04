@@ -4,7 +4,7 @@
 
 <p align="center">
 
-  <img src="####" alt="logo da equipe reaccenture"/>
+  <img src="####" alt="https://github.com/Reinaldooo/gama-bank-mobile"/>
 </p>
 <br/><br/>
 
@@ -40,7 +40,7 @@ Technically the application was developed in order to contribute to any future n
 
 <p align="center">
 
-  <img src="####" alt="logo da equipe reaccenture"/>
+  <img src="####" alt="---------------imagem da aplicação -----------------"/>
 </p>
 <br/><br/>
 
@@ -68,7 +68,7 @@ Technically the application was developed in order to contribute to any future n
 ## Publication 
 
 The project was published on the Netlify platform:
-- [Netlify](-------------)
+- [Netlify](-----------------------)
 
 <br/><br/>
 
@@ -123,21 +123,21 @@ Open http://localhost:3000 to view it in the browser.
 ## Screens
 
 
-Measures | Measures  | Measures
----------| --------- | ---------
-XXX       | XXXX     |
+Resolução | Resolução  | Resolução
+----------- | ------------ | -----------
+1440 x 2560  | 1080 x 2160  |  768 x 1280
 
 
-- [x] Cellphone
-- [x] Cellphone
-- [x] Cellphone
+- [x] Small cell phone
+- [x] Medium cell phone
+- [x] Large cell phone
 
-
+<br/><br/>
 
 ## Architecture Atomic Design
 
 ```
-\--📂 GAMA-BANK
+\--📂 GAMA-BANK - MOBILE
 			\--📂 .vscode	 
 			\--📂 public
 			\--📂src
@@ -187,19 +187,19 @@ XXX       | XXXX     |
 
 
  [<p align="center">
-  <img src="------------" alt="Logo Gama Academy" width="150" heigth="35"/>](https://www.gama.academy/)
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-gama-academy.png" alt="Logo Gama Academy" width="150" heigth="35"/>](https://www.gama.academy/)
  </p>
 
  
  [<p align="center">
-  <img src="-------------" alt="Logo Accenture" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
+  <img src="-------------" alt="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/accenture.png" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
  </p>
 
 <br/><br/>
 
 ## Credits
 
-<img src="https://github.com/Reinaldooo/gama-bank/blob/master/src/assets/equipe-reaccenture.png" /></a>
+<img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/equipe-reaccenture.png" /></a>
 
 <br/>
 
