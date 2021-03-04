@@ -205,9 +205,9 @@ export default function Transfers() {
                             iconName="calendar"
                             iconColor="#fff"
                             iconSize={25}
-                            marginTop="20px"
-                            marginBottom="30px"
-                            bgColor={missingDate ? '#e6505c' : '#0c5ef5'}
+                            marginTop="40px"
+                            marginBottom="20px"
+                            bgColor={missingDate ? '#e6505c' : '#8c52e5'}
                             color="#fff"
                         />
 
