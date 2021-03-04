@@ -18,6 +18,7 @@ import api from '../../services/api';
 import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
+import InputMasked from '../../components/InputMasked';
 
 interface ITransferForm {
     destinatario: string;
@@ -77,8 +78,16 @@ export default function Transfers() {
             formRef.current?.setErrors({});
 
             const schema = Yup.object({
-                destinatario: Yup.string().required('Campo obrigatório').trim(),
-                descricao: Yup.string().required('Campo obrigatório').trim(),
+                destinatario: Yup.string()
+                    .required('Campo obrigatório')
+                    .trim()
+                    .min(2)
+                    .max(10),
+                descricao: Yup.string()
+                    .required('Campo obrigatório')
+                    .trim()
+                    .min(2)
+                    .max(10),
                 valor: Yup.number()
                     .max(9999.99, 'Valor máximo de R$ 9.999,99')
                     .required('Campo obrigatório'),
@@ -182,7 +191,8 @@ export default function Transfers() {
                             }}
                         />
 
-                        <Input
+                        <InputMasked
+                            mask="BRL"
                             name="valor"
                             placeholder="Valor de depósito"
                             autoCapitalize="none"
