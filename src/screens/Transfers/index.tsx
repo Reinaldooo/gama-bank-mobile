@@ -143,7 +143,7 @@ export default function Transfers() {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 24}}
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'}}
                               behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
                               keyboardVerticalOffset={100}>
             <ContainerScroll _bgColor="#e6e6e6">
@@ -156,7 +156,7 @@ export default function Transfers() {
 
                 <ContainerViewDashboard>
                     <WhiteCardDashboard
-                        _MarginBottom="80px"
+                        _MarginBottom="130px"
                         _Padding="20px 20px 40px"
                     >
                         <S.HeaderCard>

@@ -128,11 +128,11 @@ export default function Deposit() {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 24}}
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'}}
                               behavior={Platform.OS === "ios" ? "padding" : "height"} enabled keyboardVerticalOffset={20}>
         <ContainerScroll _bgColor="#e6e6e6">
             <S.HeaderDashboard>
-                <S.TextHeaderDashboard>{user?.userName}</S.TextHeaderDashboard>
+                <S.TextHeaderDashboard>Olá, {user?.userName}</S.TextHeaderDashboard>
                 <S.CloseButton onPress={() => navigation.goBack()}>
                     <Feather name="x" size={33} color="#8C52E5" />
                 </S.CloseButton>
@@ -140,7 +140,7 @@ export default function Deposit() {
 
             <ContainerViewDashboard>
                 <WhiteCardDashboard
-                    _MarginBottom="80px"
+                    _MarginBottom="130px"
                     _Padding="20px 20px 40px"
                 >
                     <S.HeaderCard>
