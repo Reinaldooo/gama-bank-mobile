@@ -1,22 +1,22 @@
-import React, {useRef, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Yup from 'yup';
-import {FormHandles} from '@unform/core';
+import { FormHandles } from '@unform/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {LinksBottom, LoginForm} from './styles';
+import { LinksBottom, LoginForm } from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
 import ContainerScroll from '../../components/ContainerScrollView';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
-import {logInUser} from '../../store/modules/user/actions';
+import { logInUser } from '../../store/modules/user/actions';
 import ContainerLogoGama from '../../components/LogoGama';
-import {KeyboardAvoidingView, Platform, TextInput} from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 
 interface ILoginForm {
     login: string;
@@ -31,7 +31,7 @@ export default function Login() {
     const passwordInputRef = useRef<TextInput>(null);
 
     async function loginSysGama(data: ILoginForm) {
-        const {login, passwd} = data;
+        const { login, passwd } = data;
 
         try {
             // Start by cleaning errors
@@ -42,7 +42,7 @@ export default function Login() {
                 passwd: Yup.string().trim().required('Campo obrigatório'),
             });
 
-            await schema.validate(data, {abortEarly: false});
+            await schema.validate(data, { abortEarly: false });
 
             setLoading(true);
 
@@ -55,25 +55,28 @@ export default function Login() {
             // endpoint will break if the request has an old Authorization header
             api.defaults.headers.Authorization = null;
 
-            await api.post(`login`, postData).then(async ({data}) => {
+            await api.post(`login`, postData).then(async ({ data }) => {
                 await AsyncStorage.multiRemove([
                     '@tokenApp',
                     '@loginApp',
                     '@userNameApp',
+                    '@cpfApp',
                 ]);
                 const token = ['@tokenApp', data.token];
                 const login = ['@loginApp', data.usuario.login];
+                const cpf = ['@cpfApp', data.usuario.cpf];
                 const userName = [
                     '@userNameApp',
                     data.usuario.nome.split(' ')[0],
                 ];
-                await AsyncStorage.multiSet([token, login, userName]);
+                await AsyncStorage.multiSet([token, login, userName, cpf]);
                 api.defaults.headers.Authorization = data.token;
                 dispatch(
                     logInUser({
                         token: token[1],
                         userName: userName[1],
                         login: login[1],
+                        cpf: cpf[1],
                     })
                 );
             });
@@ -103,10 +106,18 @@ export default function Login() {
     };
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}}
-                              behavior={Platform.OS === "ios" ? "padding" : "height"} enabled keyboardVerticalOffset={10}>
+        <KeyboardAvoidingView
+            style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            enabled
+            keyboardVerticalOffset={10}
+        >
             <ContainerScroll>
-                <ContainerLogoGama mTop="50px" mBottom="20px"/>
+                <ContainerLogoGama mTop="50px" mBottom="20px" />
                 <ContainerViewLoginRegister>
                     <WhiteCardLoginRegister title="Seja bem vindo, informe seus dados para logar.">
                         <LoginForm ref={formRef} onSubmit={loginSysGama}>
