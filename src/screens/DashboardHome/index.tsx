@@ -214,8 +214,8 @@ const DashboardHome: React.FC<Props> = ({navigation}) => {
                             />
                         </WhiteCardDashboard>
                         <WhiteCardDashboard
-                            _MarginBottom="120px"
-                            _Padding="20px"
+                            _MarginBottom="150px"
+                            _Padding="20px 20px 60px"
                         >
                             <S.HeaderCard>
                                 <MaterialCommunityIcons name="currency-usd-circle-outline" size={30} color="#9b9b9b"/>
