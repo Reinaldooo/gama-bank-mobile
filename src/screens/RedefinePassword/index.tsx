@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
+import React, {useRef, useState} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {Form} from '@unform/mobile';
+import {FormHandles} from '@unform/core';
 import * as Yup from 'yup';
-import { TextInput } from 'react-native';
+import {KeyboardAvoidingView, Platform, TextInput} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { LinksBottom } from './styles';
+import {LinksBottom} from './styles';
 import WhiteCardLoginRegister from '../../components/WhiteCardLoginRegister';
 import ContainerScroll from '../../components/ContainerScrollView';
 import ContainerViewLoginRegister from '../../components/ContainerViewLoginRegister';
@@ -42,7 +42,7 @@ export default function RedefinePassword() {
         formRef.current?.submitForm();
     };
 
-    async function resetPasswd({ passwd, confirmPasswd }: IResetPasswdForm) {
+    async function resetPasswd({passwd, confirmPasswd}: IResetPasswdForm) {
         try {
             // Start by cleaning errors
             formRef.current?.setErrors({});
@@ -57,8 +57,8 @@ export default function RedefinePassword() {
             });
 
             await schema.validate(
-                { passwd, confirmPasswd },
-                { abortEarly: false }
+                {passwd, confirmPasswd},
+                {abortEarly: false}
             );
 
             setLoading(true);
@@ -69,7 +69,7 @@ export default function RedefinePassword() {
             };
 
             await api.post(`altera-senha`, postData, {
-                params: { senhaTemporaria: params.senhaTemporaria },
+                params: {senhaTemporaria: params.senhaTemporaria},
             });
 
             navLogin();
@@ -87,54 +87,58 @@ export default function RedefinePassword() {
     }
 
     return (
-        <ContainerScroll>
-            <ContainerLogoGama mTop="50px" mBottom="20px" />
-            <ContainerViewLoginRegister>
-                <WhiteCardLoginRegister title="Redefinir senha">
-                    <Form
-                        ref={formRef}
-                        style={{ width: '100%' }}
-                        onSubmit={resetPasswd}
-                    >
-                        <Input
-                            name="passwd"
-                            placeholder="Nova Senha"
-                            secureTextEntry
-                            returnKeyType="next"
-                            onSubmitEditing={() => {
-                                // Check out Input comp to details on this custom focus method
-                                passwdConfirmInputRef.current?.focus();
-                            }}
-                        />
-                        <Input
-                            ref={passwdConfirmInputRef}
-                            name="confirmPasswd"
-                            placeholder="Confirmar Nova Senha"
-                            secureTextEntry
-                            returnKeyType="send"
-                            onSubmitEditing={submitFormButton}
-                        />
-                        <ButtonPrimary
-                            title="Continuar"
-                            iconName="arrow-right"
-                            iconColor="#FFF"
-                            iconSize={25}
-                            marginTop="60px"
-                            marginBottom="30px"
-                            onPress={submitFormButton}
-                            _loading={loading}
-                        />
-                    </Form>
-                    <LinksBottom onPress={navLogin}>
-                        Ir para Login{' '}
-                        <Feather
-                            name="chevron-right"
-                            size={13}
-                            color="#8C52E5"
-                        />
-                    </LinksBottom>
-                </WhiteCardLoginRegister>
-            </ContainerViewLoginRegister>
-        </ContainerScroll>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}}
+                              behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
+                              keyboardVerticalOffset={10}>
+            <ContainerScroll>
+                <ContainerLogoGama mTop="50px" mBottom="20px"/>
+                <ContainerViewLoginRegister>
+                    <WhiteCardLoginRegister title="Redefinir senha">
+                        <Form
+                            ref={formRef}
+                            style={{width: '100%'}}
+                            onSubmit={resetPasswd}
+                        >
+                            <Input
+                                name="passwd"
+                                placeholder="Nova Senha"
+                                secureTextEntry
+                                returnKeyType="next"
+                                onSubmitEditing={() => {
+                                    // Check out Input comp to details on this custom focus method
+                                    passwdConfirmInputRef.current?.focus();
+                                }}
+                            />
+                            <Input
+                                ref={passwdConfirmInputRef}
+                                name="confirmPasswd"
+                                placeholder="Confirmar Nova Senha"
+                                secureTextEntry
+                                returnKeyType="send"
+                                onSubmitEditing={submitFormButton}
+                            />
+                            <ButtonPrimary
+                                title="Continuar"
+                                iconName="arrow-right"
+                                iconColor="#FFF"
+                                iconSize={25}
+                                marginTop="60px"
+                                marginBottom="30px"
+                                onPress={submitFormButton}
+                                _loading={loading}
+                            />
+                        </Form>
+                        <LinksBottom onPress={navLogin}>
+                            Ir para Login{' '}
+                            <Feather
+                                name="chevron-right"
+                                size={13}
+                                color="#8C52E5"
+                            />
+                        </LinksBottom>
+                    </WhiteCardLoginRegister>
+                </ContainerViewLoginRegister>
+            </ContainerScroll>
+        </KeyboardAvoidingView>
     );
 }

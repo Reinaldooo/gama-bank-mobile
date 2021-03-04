@@ -29,7 +29,7 @@ export const HeaderDashboard = styled.View`
     justify-content: space-between;
     align-items: center;
     flex-flow: row;
-    width: ${Dimensions.get('window').width - 65}px;
+    width: ${Dimensions.get('window').width}px;
     padding: 35px;
 `;
 
@@ -40,16 +40,9 @@ export const TextHeaderDashboard = styled.Text`
     color: #8c52e5;
 `;
 
-export const ContainerIcon = styled.View`
-    flex-flow: row;
-    width: 100px;
-    justify-content: flex-end;
-    margin-left: 90px;
-`;
-
 export const CloseButton = styled(RectButton)`
     width: 100%;
-    max-width: 30px;
+    max-width: 33px;
 `;
 
 export const DepositForm = styled(Form)`

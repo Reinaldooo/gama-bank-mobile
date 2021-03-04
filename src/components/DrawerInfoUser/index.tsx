@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import DrawerContentView from '../DrawerContentView';
 import DrawerContentInformation from '../DrawerContentInformation';
+import ButtonPrimary from "../ButtonPrimary";
 
 export type DrawerProps = DrawerContentComponentProps<DrawerContentOptions>;
 
@@ -35,6 +36,7 @@ const DrawerInfoUser: React.FC<DrawerProps> = (props) => {
                     title="Você tem"
                     description="4 planos de conta"
                 />
+                <ButtonPrimary title="Sair" iconName="x" iconSize={33} iconColor="#FFFFFF" bgColor="#8C52E5" padding="5px 20px" marginTop="40px" />
             </DrawerContentView>
         </DrawerContentScrollView>
     );
