@@ -4,7 +4,7 @@
 
 <p align="center">
 
-  <img src="####" alt="https://github.com/Reinaldooo/gama-bank-mobile"/>
+  <img src="####" alt="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-reaccenture.png"/>
 </p>
 <br/><br/>
 
@@ -43,12 +43,12 @@ Technically the application was developed in order to contribute to any future n
 
 <p align="center">
 
-  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/apresentacao-app-gama-bank.gif"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/apresentacao-app-gama-bank-mobile.gif"/>
 </p>
 <br/><br/>
 
 
-- [Get to know the mobile project]( ----figma) in its entirety and check out everything this Gama-Bank has to offer ...
+Get to know the mobile project in its entirety and check out everything this Gama-Bank has to offer ...
 
 <br/><br/>
 
@@ -72,10 +72,11 @@ Technically the application was developed in order to contribute to any future n
 
 
 <p align="center">
-  <img src="------------" alt="business objectives"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/Career%20Planning%20Mind%20Map.gif" alt="business objectives"/>
 
  <br/><br/>
 
+ 
  ## Installation
 
 To run this project on your computer, you need to install NodeJS:
@@ -86,7 +87,14 @@ To install the necessary dependencies, issue the command:
 ```
 npm install 
 ```
-???? ou -------> npm install --global expo-cli
+
+```
+ npm install --global expo-cli 
+```
+
+```
+ cd pastaDoProjeto 
+```
 
 And to run the application:
 `expo start`
@@ -177,7 +185,7 @@ Resolução | Resolução  | Resolução
 
  
  [<p align="center">
-  <img src="-------------" alt="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/accenture.png" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/accenture.png"alt="Logo Accenture" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
  </p>
 
 <br/><br/>
