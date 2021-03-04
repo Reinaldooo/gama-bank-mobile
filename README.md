@@ -14,18 +14,21 @@
 ## Summary
 
   - [Gama Bank Project](#gama-bank-project)
-  - [Layout](#layout)
-  - [Publication ](#publication )
+  - [Layout](#layout) 
   - [Business Objectives](#business-objectives)
   - [Installation](#installation) 
   - [Frontend built With ](#frontend-built-with)   
   - [Screens ](#screens ) 
-  - [Architecture Atomic Design](#architecture-atomic-design)
-  - [Work Strategy](#work-strategy)  
+  - [Architecture](#architecture) 
   - [Thanks](#thanks)
   - [Credits](#credits)
   - [Contact Linkedin](#contact-linkedin)   
   - [Web Project](https://github.com/Reinaldooo/gama-bank)
+
+<br/><br/>
+
+
+  ## Gama Bank Project
 
 
 Thinking about reaching a wider audience when accessing an application, in addition to the Gama-Bank front end web project, we were able to experience the development of the mobile application.
@@ -40,7 +43,7 @@ Technically the application was developed in order to contribute to any future n
 
 <p align="center">
 
-  <img src="####" alt="---------------imagem da aplicação -----------------"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/apresentacao-app-gama-bank.gif"/>
 </p>
 <br/><br/>
 
@@ -63,14 +66,6 @@ Technically the application was developed in order to contribute to any future n
 
 <br/><br/>
 
-
-
-## Publication 
-
-The project was published on the Netlify platform:
-- [Netlify](-----------------------)
-
-<br/><br/>
 
 
 ## Business Objectives
@@ -134,7 +129,7 @@ Resolução | Resolução  | Resolução
 
 <br/><br/>
 
-## Architecture Atomic Design
+## Architecture 
 
 ```
 \--📂 GAMA-BANK - MOBILE
@@ -164,16 +159,6 @@ Resolução | Resolução  | Resolução
 	|   tsconfig.json
 	|   yarn.lock 
 ```
-<br/><br/>
-
-
-## Our journey
-
-<p align="center">
-
-  <img src="---------" alt="Gama Bank Page"/>
-
-
 <br/><br/>
 
 
