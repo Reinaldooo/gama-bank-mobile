@@ -4,9 +4,10 @@
 
 <p align="center">
 
-  <img src="####" alt="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-reaccenture.png"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-reaccenture.png"/>
 </p>
 <br/><br/>
+
 
 
 
@@ -183,10 +184,11 @@ Resolução | Resolução  | Resolução
   <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-gama-academy.png" alt="Logo Gama Academy" width="150" heigth="35"/>](https://www.gama.academy/)
  </p>
 
- 
+
  [<p align="center">
-  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/accenture.png"alt="Logo Accenture" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/accenture.png" alt="Logo Accenture" width="150" heigth="35"/>](https://www.accenture.com/br-pt)
  </p>
+ 
 
 <br/><br/>
 
