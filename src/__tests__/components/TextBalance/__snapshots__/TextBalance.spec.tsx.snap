@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextBalance /> Should render <TextBalance /> 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#34A6E7",
+        "fontSize": 28,
+        "fontWeight": "bold",
+        "marginTop": 15,
+        "textAlign": "center",
+      },
+    ]
+  }
+/>
+`;

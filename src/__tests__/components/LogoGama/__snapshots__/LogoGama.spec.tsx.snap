@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LogoGama /> Should render <LogoGama /> 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+        "marginBottom": 0,
+        "marginTop": 0,
+        "width": 750,
+      },
+    ]
+  }
+>
+  <Image
+    source={1}
+    style={
+      Array [
+        Object {
+          "maxWidth": 249,
+          "width": "100%",
+        },
+      ]
+    }
+  />
+</View>
+`;

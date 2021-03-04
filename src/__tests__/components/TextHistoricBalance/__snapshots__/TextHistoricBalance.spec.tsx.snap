@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextHistoricBalance /> Should render <TextHistoricBalance /> 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#9B9B9B",
+        "fontSize": 15,
+        "lineHeight": 18,
+        "marginTop": 15,
+        "textAlign": "left",
+      },
+    ]
+  }
+/>
+`;
