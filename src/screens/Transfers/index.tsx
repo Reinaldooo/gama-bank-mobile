@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import * as Yup from 'yup';
-import { FormHandles } from '@unform/core';
+import {FormHandles} from '@unform/core';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useNavigation } from '@react-navigation/native';
-import { Image, TextInput } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Image, KeyboardAvoidingView, Platform, TextInput} from 'react-native';
 import shortid from 'shortid';
 //
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -13,12 +13,13 @@ import * as S from './styles';
 import Input from '../../components/Input';
 import WhiteCardDashboard from '../../components/WhiteCardDashboard';
 import ContainerViewDashboard from '../../components/ContainerDashboard';
-import { createFloat } from '../../utils/helpers';
+import {createFloat} from '../../utils/helpers';
 import api from '../../services/api';
-import { debitTransactionSuccess } from '../../store/modules/accounts/actions';
+import {debitTransactionSuccess} from '../../store/modules/accounts/actions';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { IRootState } from '../../store';
 import InputMasked from '../../components/InputMasked';
+import {Feather} from '@expo/vector-icons';
 
 interface ITransferForm {
     destinatario: string;
@@ -39,11 +40,11 @@ export default function Transfers() {
     const [missingDate, setMissingDate] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const { debitAccount, transactionTypes } = useSelector(
+    const {debitAccount, transactionTypes} = useSelector(
         (state: IRootState) => state.accounts
     );
 
-    const { user } = useSelector((state: IRootState) => state.user);
+    const {user} = useSelector((state: IRootState) => state.user);
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -69,10 +70,10 @@ export default function Transfers() {
     };
 
     async function handleSubmit({
-        descricao,
-        valor,
-        destinatario,
-    }: ITransferForm) {
+                                    descricao,
+                                    valor,
+                                    destinatario,
+                                }: ITransferForm) {
         try {
             valor = valor && createFloat(valor);
             formRef.current?.setErrors({});
@@ -94,8 +95,8 @@ export default function Transfers() {
             });
 
             await schema.validate(
-                { descricao, valor, destinatario },
-                { abortEarly: false }
+                {descricao, valor, destinatario},
+                {abortEarly: false}
             );
 
             if (!date) {
@@ -117,9 +118,9 @@ export default function Transfers() {
                 planoConta: planoConta.id,
             };
 
-            const headers = { Authorization: user!.token! };
+            const headers = {Authorization: user!.token!};
 
-            await api.post(`lancamentos`, postData, { headers });
+            await api.post(`lancamentos`, postData, {headers});
             dispatch(
                 debitTransactionSuccess({
                     ...postData,
@@ -142,32 +143,29 @@ export default function Transfers() {
     }
 
     return (
-        <ContainerScroll _bgColor="#e6e6e6">
-            <S.HeaderDashboard>
-                <S.TextHeaderDashboard>
-                    Olá, {user?.userName}
-                </S.TextHeaderDashboard>
-                <S.ContainerIcon>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 24}}
+                              behavior={Platform.OS === "ios" ? "padding" : "height"} enabled
+                              keyboardVerticalOffset={100}>
+            <ContainerScroll _bgColor="#e6e6e6">
+                <S.HeaderDashboard>
+                    <S.TextHeaderDashboard>Olá, {user?.userName}</S.TextHeaderDashboard>
                     <S.CloseButton onPress={() => navigation.goBack()}>
-                        <Image
-                            source={require('../../assets/close-drawer.png')}
-                        />
+                        <Feather name="x" size={33} color="#8C52E5"/>
                     </S.CloseButton>
-                </S.ContainerIcon>
-            </S.HeaderDashboard>
+                </S.HeaderDashboard>
 
-            <ContainerViewDashboard>
-                <WhiteCardDashboard
-                    _MarginBottom="120px"
-                    _Padding="20px 20px 40px"
-                >
-                    <S.HeaderCard>
-                        <S.IconHeaderCard
-                            source={require('../../assets/icon-money.png')}
-                        />
-                        <S.TextHeaderCard>Transferências</S.TextHeaderCard>
-                    </S.HeaderCard>
-                    <S.DepositForm ref={formRef} onSubmit={handleSubmit}>
+                <ContainerViewDashboard>
+                    <WhiteCardDashboard
+                        _MarginBottom="80px"
+                        _Padding="20px 20px 40px"
+                    >
+                        <S.HeaderCard>
+                            <S.IconHeaderCard
+                                source={require('../../assets/icon-money.png')}
+                            />
+                            <S.TextHeaderCard>Transferências</S.TextHeaderCard>
+                        </S.HeaderCard>
+                        <S.DepositForm ref={formRef} onSubmit={handleSubmit}>
                         <Input
                             name="destinatario"
                             placeholder="Destinatário"
@@ -238,9 +236,10 @@ export default function Transfers() {
                             color="#fff"
                             _loading={loading}
                         />
-                    </S.DepositForm>
-                </WhiteCardDashboard>
-            </ContainerViewDashboard>
-        </ContainerScroll>
+                        </S.DepositForm>
+                    </WhiteCardDashboard>
+                </ContainerViewDashboard>
+            </ContainerScroll>
+        </KeyboardAvoidingView>
     );
 }

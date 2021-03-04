@@ -2,6 +2,10 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
+interface TextHeaderProps {
+    _mTop?: string
+}
+
 export const HeaderDashboard = styled.View`
     display: flex;
     justify-content: space-between;
@@ -32,6 +36,8 @@ export const IconHeaderDashboard = styled(RectButton)`
 export const IconEye = styled(RectButton)`
     width: 100%;
     max-width: 40px;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const ImgIconEye = styled.Image`
@@ -57,12 +63,13 @@ export const IconHeaderCard = styled.Image`
     max-width: 24px;
 `;
 
-export const TextHeaderCard = styled.Text`
+export const TextHeaderCard = styled.Text<TextHeaderProps>`
     font-size: 18px;
     font-weight: 700;
     text-align: left;
     color: #9b9b9b;
     padding-left: 10px;
+    margin-top: ${(props) => props._mTop || "0px"};
 `;
 
 export const ContentCard = styled.View`

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //
 import * as S from './styles';
-import { DrawerParamList } from '../../navigation/drawer';
-import { getDateInfo } from '../../utils/helpers';
+import {DrawerParamList} from '../../navigation/drawer';
+import {getDateInfo} from '../../utils/helpers';
 import api from '../../services/api';
-import { IRootState } from '../../store';
-import { logOutUser } from '../../store/modules/user/actions';
+import {IRootState} from '../../store';
+import {logOutUser} from '../../store/modules/user/actions';
 import {
     accountDataSuccess,
     toggleTransactionVisibility,
@@ -23,20 +23,19 @@ import MoneyLoader from '../../components/MoneyLoader';
 import TransactionItem from '../../components/TransactionItem';
 import HidableValue from '../../components/HidableValue';
 import FormattedBRL from '../../components/FormattedBRL';
+import {Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-type DashboardHomeNavigationProp = DrawerNavigationProp<
-    DrawerParamList,
-    'DashboardHome'
->;
+type DashboardHomeNavigationProp = DrawerNavigationProp<DrawerParamList,
+    'DashboardHome'>;
 
 type Props = {
     navigation: DashboardHomeNavigationProp;
 };
 
-const DashboardHome: React.FC<Props> = ({ navigation }) => {
+const DashboardHome: React.FC<Props> = ({navigation}) => {
     const dispatch = useDispatch();
-    const { user } = useSelector((state: IRootState) => state.user);
-    const { loading, debitAccount, transactions, hideInfo } = useSelector(
+    const {user} = useSelector((state: IRootState) => state.user);
+    const {loading, debitAccount, transactions, hideInfo} = useSelector(
         (state: IRootState) => state.accounts
     );
 
@@ -67,8 +66,8 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
         async function getApiInfo() {
             try {
                 const [
-                    { data: accounts },
-                    { data: tTypes },
+                    {data: accounts},
+                    {data: tTypes},
                 ] = await Promise.all([
                     api.get(`/dashboard`, {
                         params,
@@ -129,22 +128,18 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                     </S.TextHeaderDashboard>
                     <S.ContainerIcon>
                         <S.IconEye onPress={toggleHideInfo}>
-                            <S.ImgIconEye
-                                source={require('../../assets/icon-eye.png')}
-                            />
+                            <Ionicons name="ios-eye-outline" size={33} color="#FFFFFF"/>
                         </S.IconEye>
                         <S.IconHeaderDashboard
                             onPress={() => navigation.openDrawer()}
                         >
-                            <S.ImgIconHeaderDashboard
-                                source={require('../../assets/icon-user.png')}
-                            />
+                            <Ionicons name="md-person-outline" size={33} color="#FFFFFF"/>
                         </S.IconHeaderDashboard>
                     </S.ContainerIcon>
                 </S.HeaderDashboard>
 
                 {loading ? (
-                    <MoneyLoader />
+                    <MoneyLoader/>
                 ) : (
                     <>
                         <WhiteCardDashboard
@@ -152,9 +147,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             _Padding="20px"
                         >
                             <S.HeaderCard>
-                                <S.IconHeaderCard
-                                    source={require('../../assets/icon-money.png')}
-                                />
+                                <MaterialCommunityIcons name="currency-usd-circle-outline" size={30} color="#9b9b9b"/>
                                 <S.TextHeaderCard>
                                     Saldo da conta
                                 </S.TextHeaderCard>
@@ -187,9 +180,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             _Padding="20px"
                         >
                             <S.HeaderCard>
-                                <S.IconHeaderCard
-                                    source={require('../../assets/icon-money.png')}
-                                />
+                                <MaterialCommunityIcons name="currency-usd-circle-outline" size={30} color="#9b9b9b"/>
                                 <S.TextHeaderCard>
                                     Planos de conta
                                 </S.TextHeaderCard>
@@ -227,16 +218,14 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                             _Padding="20px"
                         >
                             <S.HeaderCard>
-                                <S.IconHeaderCard
-                                    source={require('../../assets/icon-money.png')}
-                                />
+                                <MaterialCommunityIcons name="currency-usd-circle-outline" size={30} color="#9b9b9b"/>
                                 <S.TextHeaderCard>
                                     Últimos Lançamentos
                                 </S.TextHeaderCard>
                             </S.HeaderCard>
 
                             {hideInfo ? (
-                                <HidableValue condition={hideInfo} />
+                                <HidableValue condition={hideInfo}/>
                             ) : (
                                 <>
                                     {transactions && transactions![0] ? (
@@ -248,7 +237,7 @@ const DashboardHome: React.FC<Props> = ({ navigation }) => {
                                             />
                                         ))
                                     ) : (
-                                        <S.TextHeaderCard>
+                                        <S.TextHeaderCard _mTop="20px">
                                             Não existem lançamentos.
                                         </S.TextHeaderCard>
                                     )}
