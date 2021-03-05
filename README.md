@@ -4,7 +4,7 @@
 
 <p align="center">
 
-  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/logo-reaccenture.png"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/reaccenture-equipe.png"/>
 </p>
 <br/><br/>
 
@@ -99,12 +99,6 @@ npm install
 
 And to run the application:
 `expo start`
-
-
-The application will run on the local server on standard port 3000:
-
-Runs the app in the development mode.\
-Open http://localhost:3000 to view it in the browser.
 
 <br/><br/>
 
