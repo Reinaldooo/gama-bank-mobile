@@ -41,10 +41,9 @@ The application's loyalty in relation to the client's visual identity was also t
 Technically the application was developed in order to contribute to any future needs for scalability of the application, so that it can accompany the growth of the brand with its consumer market.
 
 
-
 <p align="center">
 
-  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/apresentacao-app-gama-bank-mobile.gif"/>
+  <img src="https://github.com/Reinaldooo/gama-bank-mobile/blob/master/assets/apresentacao-app-gama-bank-mobile.gif" alt="Gama Bank - Mobile" width="400" heigth="750"/>
 </p>
 <br/><br/>
 
